@@ -109,6 +109,7 @@ function runProgram() {
     document.getElementById("output").innerHTML = output;
 
     localStorage.setItem("studentResult", output);
+    localStorage.setItem("printResult", resultOnly);
 }
 
 // Reset Form
@@ -136,7 +137,7 @@ function toggleDarkMode() {
 }
 function printResult() {
 
-    const result = document.getElementById("output").innerHTML;
+    const result = localStorage.getItem("printResult");
 
     const printWindow = window.open("", "", "width=800,height=600");
 
