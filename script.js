@@ -75,6 +75,17 @@ function runProgram() {
 
     let scholarship =
         percentage >= 85 ? "Eligible" : "Not Eligible";
+    let resultOnly = `
+    <h2>Result</h2>
+
+    <p><b>Total:</b> ${total}</p>
+    <p><b>Average:</b> ${average.toFixed(2)}</p>
+    <p><b>Percentage:</b> ${percentage.toFixed(2)}%</p>
+    <p><b>Grade:</b> ${grade}</p>
+    <p><b>Remarks:</b> ${remarks}</p>
+    <p><b>Status:</b> ${status}</p>
+    <p><b>Scholarship:</b> ${scholarship}</p>
+    `;
 
     let output = `
     <h2>Student Details</h2>
