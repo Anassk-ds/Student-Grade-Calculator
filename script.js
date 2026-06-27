@@ -123,3 +123,21 @@ function resetForm() {
 function toggleDarkMode() {
     document.body.classList.toggle("dark");
 }
+function printResult() {
+
+    // Check if dark mode is enabled
+    const isDark = document.body.classList.contains("dark");
+
+    // Temporarily remove dark mode
+    if (isDark) {
+        document.body.classList.remove("dark");
+    }
+
+    // Open print dialog
+    window.print();
+
+    // Restore dark mode after printing
+    if (isDark) {
+        document.body.classList.add("dark");
+    }
+        }
