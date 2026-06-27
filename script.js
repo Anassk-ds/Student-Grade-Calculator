@@ -1,305 +1,125 @@
+// Load saved data when page opens
+window.onload = function () {
+    if (localStorage.getItem("studentResult")) {
+        document.getElementById("output").innerHTML =
+            localStorage.getItem("studentResult");
+    }
+};
+
+// Calculate Result
 function runProgram() {
 
-let output = "";
+    let name = document.getElementById("name").value.trim();
+    let roll = document.getElementById("roll").value.trim();
+    let course = document.getElementById("course").value.trim();
+    let age = document.getElementById("age").value;
 
-console.clear();
+    let m1 = Number(document.getElementById("m1").value);
+    let m2 = Number(document.getElementById("m2").value);
+    let m3 = Number(document.getElementById("m3").value);
+    let m4 = Number(document.getElementById("m4").value);
+    let m5 = Number(document.getElementById("m5").value);
 
-const studentName = "SHAIK ANAS";
-const rollNumber = "23HT1A4491";
-const course = "B.Tech Data Science";
-const age = 21;
+    if (
+        name === "" ||
+        roll === "" ||
+        course === "" ||
+        age === "" ||
+        isNaN(m1) ||
+        isNaN(m2) ||
+        isNaN(m3) ||
+        isNaN(m4) ||
+        isNaN(m5)
+    ) {
+        alert("Please fill all fields.");
+        return;
+    }
 
-let marks1 = 85;
-let marks2 = 78;
-let marks3 = 92;
-let marks4 = 88;
-let marks5 = 81;
+    let marks = [m1, m2, m3, m4, m5];
 
-output += "<h2>Student Details</h2>";
-output += "<b>Name:</b> " + studentName + "<br>";
-output += "<b>Roll Number:</b> " + rollNumber + "<br>";
-output += "<b>Course:</b> " + course + "<br>";
-output += "<b>Age:</b> " + age + "<br><br>";
+    for (let mark of marks) {
+        if (mark < 0 || mark > 100) {
+            alert("Marks should be between 0 and 100.");
+            return;
+        }
+    }
 
-console.log("Student Name:", studentName);
-console.log("Roll Number:", rollNumber);
-console.log("Course:", course);
-console.log("Age:", age);
+    let total = m1 + m2 + m3 + m4 + m5;
+    let average = total / 5;
+    let percentage = average;
 
-let total = marks1 + marks2 + marks3 + marks4 + marks5;
-let average = total / 5;
-let percentage = average;
+    let grade = "";
+    let remarks = "";
 
-output += "<h2>Marks</h2>";
-output += "Marks: " + marks1 + ", " + marks2 + ", " + marks3 + ", " + marks4 + ", " + marks5 + "<br>";
-output += "<b>Total:</b> " + total + "<br>";
-output += "<b>Average:</b> " + average.toFixed(2) + "<br>";
-output += "<b>Percentage:</b> " + percentage.toFixed(2) + "%<br><br>";
+    if (percentage >= 90) {
+        grade = "A+";
+        remarks = "Outstanding";
+    } else if (percentage >= 80) {
+        grade = "A";
+        remarks = "Excellent";
+    } else if (percentage >= 70) {
+        grade = "B";
+        remarks = "Very Good";
+    } else if (percentage >= 60) {
+        grade = "C";
+        remarks = "Good";
+    } else if (percentage >= 50) {
+        grade = "D";
+        remarks = "Pass";
+    } else {
+        grade = "F";
+        remarks = "Fail";
+    }
 
-console.log("Total:", total);
-console.log("Average:", average);
-console.log("Percentage:", percentage);
+    let status = percentage >= 50 ? "PASS" : "FAIL";
 
-let grade;
+    let scholarship =
+        percentage >= 85 ? "Eligible" : "Not Eligible";
 
-if(percentage>=90){
-grade="A+";
-}
-else if(percentage>=80){
-grade="A";
-}
-else if(percentage>=70){
-grade="B";
-}
-else if(percentage>=60){
-grade="C";
-}
-else if(percentage>=50){
-grade="D";
-}
-else{
-grade="Fail";
-}
+    let output = `
+    <h2>Student Details</h2>
 
-output += "<h2>Result</h2>";
-output += "<b>Grade:</b> " + grade + "<br>";
+    <p><b>Name:</b> ${name}</p>
+    <p><b>Roll Number:</b> ${roll}</p>
+    <p><b>Course:</b> ${course}</p>
+    <p><b>Age:</b> ${age}</p>
 
-if(percentage>=85){
-output += "Scholarship: Eligible<br>";
-}
-else{
-output += "Scholarship: Not Eligible<br>";
-}
+    <h2>Result</h2>
 
-if(percentage>=50){
-output += "Status: PASS<br><br>";
-}
-else{
-output += "Status: FAIL<br><br>";
-}
+    <p><b>Total:</b> ${total}</p>
+    <p><b>Average:</b> ${average.toFixed(2)}</p>
+    <p><b>Percentage:</b> ${percentage.toFixed(2)}%</p>
+    <p><b>Grade:</b> ${grade}</p>
+    <p><b>Remarks:</b> ${remarks}</p>
+    <p><b>Status:</b> ${status}</p>
+    <p><b>Scholarship:</b> ${scholarship}</p>
+    `;
 
-output += "<h2>Numbers 1 to 20</h2>";
+    document.getElementById("output").innerHTML = output;
 
-for(let i=1;i<=20;i++){
-output += i + " ";
-}
-
-output += "<br><br>";
-
-output += "<h2>Even Numbers (1-50)</h2>";
-
-for(let i=1;i<=50;i++){
-if(i%2==0){
-output += i + " ";
-}
+    localStorage.setItem("studentResult", output);
 }
 
-output += "<br><br>";
+// Reset Form
+function resetForm() {
 
-output += "<h2>Odd Numbers (1-50)</h2>";
+    document.getElementById("name").value = "";
+    document.getElementById("roll").value = "";
+    document.getElementById("course").value = "";
+    document.getElementById("age").value = "";
 
-for(let i=1;i<=50;i++){
-if(i%2!=0){
-output += i + " ";
-}
-}
+    document.getElementById("m1").value = "";
+    document.getElementById("m2").value = "";
+    document.getElementById("m3").value = "";
+    document.getElementById("m4").value = "";
+    document.getElementById("m5").value = "";
 
-output += "<br><br>";
+    document.getElementById("output").innerHTML = "";
 
-let num=7;
-
-output += "<h2>Multiplication Table of 7</h2>";
-
-for(let i=1;i<=10;i++){
-output += num + " × " + i + " = " + (num*i) + "<br>";
-}
-
-let N=20;
-let sum=0;
-
-for(let i=1;i<=N;i++){
-sum+=i;
+    localStorage.removeItem("studentResult");
 }
 
-output += "<br><b>Sum of 1 to " + N + " = " + sum + "</b><br><br>";
-    // ===============================
-// Part 5: JavaScript Syntax Practice
-// ===============================
-
-output += "<h2>JavaScript Syntax Practice</h2>";
-
-// Swapping Numbers
-
-let a = 10;
-let b = 20;
-
-output += "<b>Before Swapping:</b> a = " + a + ", b = " + b + "<br>";
-
-let temp = a;
-a = b;
-b = temp;
-
-output += "<b>After Swapping:</b> a = " + a + ", b = " + b + "<br><br>";
-
-console.log("After Swapping:", a, b);
-
-// Positive or Negative
-
-let number = -15;
-
-if(number > 0){
-output += number + " is Positive<br><br>";
+// Dark Mode
+function toggleDarkMode() {
+    document.body.classList.toggle("dark");
 }
-else if(number < 0){
-output += number + " is Negative<br><br>";
-}
-else{
-output += number + " is Zero<br><br>";
-}
-
-// Largest of Three Numbers
-
-let x = 45;
-let y = 80;
-let z = 60;
-
-let largest;
-
-if(x >= y && x >= z){
-largest = x;
-}
-else if(y >= x && y >= z){
-largest = y;
-}
-else{
-largest = z;
-}
-
-output += "<b>Largest Number:</b> " + largest + "<br><br>";
-
-// Leap Year
-
-let year = 2028;
-
-if((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)){
-output += year + " is a Leap Year<br><br>";
-}
-else{
-output += year + " is Not a Leap Year<br><br>";
-}
-
-// Factorial
-
-let n = 5;
-let factorial = 1;
-
-for(let i = 1; i <= n; i++){
-factorial *= i;
-}
-
-output += "Factorial of " + n + " = " + factorial + "<br><br>";
-
-// Reverse Digits
-
-let num1 = 12345;
-let reverse = 0;
-let tempNum = num1;
-
-while(tempNum > 0){
-
-let digit = tempNum % 10;
-
-reverse = reverse * 10 + digit;
-
-tempNum = parseInt(tempNum / 10);
-
-}
-
-output += "Reverse of " + num1 + " = " + reverse + "<br><br>";
-
-// Palindrome
-
-let original = 121;
-let rev = 0;
-let temp2 = original;
-
-while(temp2 > 0){
-
-let digit = temp2 % 10;
-
-rev = rev * 10 + digit;
-
-temp2 = parseInt(temp2 / 10);
-
-}
-
-if(original == rev){
-
-output += original + " is Palindrome<br><br>";
-
-}
-else{
-
-output += original + " is Not Palindrome<br><br>";
-
-}
-
-// Fibonacci Series
-
-output += "<b>Fibonacci Series:</b><br>";
-
-let f1 = 0;
-let f2 = 1;
-
-output += f1 + " " + f2 + " ";
-
-for(let i = 3; i <= 10; i++){
-
-let next = f1 + f2;
-
-output += next + " ";
-
-f1 = f2;
-f2 = next;
-
-}
-
-output += "<br><br>";
-
-// Digit Count
-
-let value = 987654;
-let count = 0;
-let temp3 = value;
-
-while(temp3 > 0){
-
-count++;
-
-temp3 = parseInt(temp3 / 10);
-
-}
-
-output += "Digit Count of " + value + " = " + count + "<br><br>";
-
-// Sum of Digits
-
-let number2 = 5678;
-let sumDigits = 0;
-let temp4 = number2;
-
-while(temp4 > 0){
-
-sumDigits += temp4 % 10;
-
-temp4 = parseInt(temp4 / 10);
-
-}
-
-output += "Sum of Digits of " + number2 + " = " + sumDigits + "<br><br>";
-
-console.log(output);
-
-document.getElementById("output").innerHTML = output;
-
-  }
