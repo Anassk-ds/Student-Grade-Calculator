@@ -125,19 +125,43 @@ function toggleDarkMode() {
 }
 function printResult() {
 
-    // Check if dark mode is enabled
-    const isDark = document.body.classList.contains("dark");
+    const result = document.getElementById("output").innerHTML;
 
-    // Temporarily remove dark mode
-    if (isDark) {
-        document.body.classList.remove("dark");
-    }
+    const printWindow = window.open("", "", "width=800,height=600");
 
-    // Open print dialog
-    window.print();
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Student Grade Report</title>
+            <style>
+                body{
+                    font-family: Arial, sans-serif;
+                    padding:30px;
+                    line-height:1.8;
+                    color:#000;
+                }
 
-    // Restore dark mode after printing
-    if (isDark) {
-        document.body.classList.add("dark");
-    }
-        }
+                h2{
+                    color:#0d6efd;
+                    border-bottom:2px solid #0d6efd;
+                    padding-bottom:5px;
+                }
+
+                p{
+                    font-size:18px;
+                }
+            </style>
+        </head>
+
+        <body>
+            <h1 style="text-align:center;">Student Grade Report</h1>
+            ${result}
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
+    printWindow.close();
+                }
