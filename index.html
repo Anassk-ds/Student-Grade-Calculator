@@ -112,27 +112,28 @@ button:hover{
 }
 
 }
+@media print {
 
-@media print{
+    body * {
+        visibility: hidden;
+    }
 
-body *{
-    visibility:hidden;
-}
+    #output,
+    #output * {
+        visibility: visible;
+ }
 
-#output,
-#output *{
-    visibility:visible;
-}
+    #output {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        padding: 20px;
+        background: white;
+        color: black;
+ }
 
-#output{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-}
-
-}
-
+ }
 </style>
 </head>
 
