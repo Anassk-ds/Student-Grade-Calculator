@@ -3,152 +3,159 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Information & Grade Calculator</title>
+<title>Student Grade Calculator</title>
 
 <style>
+
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
 }
 
 body{
-background:#f4f4f4;
-padding:30px;
+    background:#f4f4f4;
+    color:#333;
+    transition:.3s;
 }
 
 .container{
-max-width:900px;
-margin:auto;
-background:#fff;
-padding:20px;
-border-radius:10px;
-box-shadow:0 0 10px rgba(0,0,0,0.2);
+    max-width:700px;
+    margin:30px auto;
+    background:#fff;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.2);
 }
 
 h1{
-text-align:center;
-color:#0d6efd;
-margin-bottom:20px;
+    text-align:center;
+    color:#0d6efd;
+    margin-bottom:20px;
 }
 
 h2{
-margin-top:20px;
-color:#333;
-border-bottom:2px solid #0d6efd;
-padding-bottom:5px;
+    margin:20px 0 10px;
+    color:#444;
 }
 
-#output{
-margin-top:20px;
-padding:15px;
-background:#eef5ff;
-border-radius:8px;
-line-height:1.8;
-}
-
-pre{
-background:#222;
-color:#0f0;
-padding:15px;
-overflow:auto;
-border-radius:8px;
-margin-top:10px;
-}
-
-button{
-margin-top:20px;
-padding:10px 20px;
-background:#0d6efd;
-color:white;
-border:none;
-border-radius:5px;
-cursor:pointer;
-transition:.3s;
-}
-
-button:hover{
-background:#084298;
-transform:scale(1.05);
-}
-.form{
-display:grid;
-gap:10px;
-margin-top:20px;
+label{
+    display:block;
+    margin-top:12px;
+    font-weight:bold;
 }
 
 input{
-padding:10px;
-border:1px solid #ccc;
-border-radius:5px;
-font-size:16px;
+    width:100%;
+    padding:10px;
+    margin-top:5px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    font-size:16px;
 }
 
 .buttons{
-display:flex;
-flex-wrap:wrap;
-gap:10px;
-margin-top:20px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+button{
+    flex:1;
+    padding:12px;
+    border:none;
+    border-radius:5px;
+    background:#0d6efd;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#084298;
+}
+
+#studentDetails,
+#output{
+    margin-top:25px;
+    padding:20px;
+    border-radius:8px;
+    background:#f8f9fa;
 }
 
 .dark{
-background:#222;
-color:white;
+    background:#222;
+    color:#fff;
 }
 
 .dark .container{
-background:#333;
-color:white;
+    background:#333;
 }
 
+.dark input{
+    background:#444;
+    color:white;
+    border:1px solid #777;
+}
+
+.dark #studentDetails,
 .dark #output{
-background:#444;
-color:white;
+    background:#444;
 }
-@media print {
-    body * {
-        visibility: hidden;
-    }
 
-    #output,
-    #output * {
-        visibility: visible;
-    }
+@media(max-width:600px){
 
-    #output {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-    }
-  }
+.buttons{
+    flex-direction:column;
+}
+
+}
+
+@media print{
+
+body *{
+    visibility:hidden;
+}
+
+#output,
+#output *{
+    visibility:visible;
+}
+
+#output{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+}
+
+}
+
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
 
 <h1>Student Grade Calculator</h1>
 
-<div class="form">
-
 <h2>Student Details</h2>
 
-<label>Student Name</label>
-<input type="text" id="name" placeholder="Enter Student Name">
+<label>Name</label>
+<input type="text" id="name">
 
 <label>Roll Number</label>
-<input type="text" id="roll" placeholder="Enter Roll Number">
+<input type="text" id="roll">
 
 <label>Course</label>
-<input type="text" id="course" placeholder="Enter Course">
+<input type="text" id="course">
 
 <label>Age</label>
-<input type="number" id="age" placeholder="Enter Age">
-
-<h2>Marks</h2>
+<input type="number" id="age">
+<h2>Subject Marks</h2>
 
 <label>Subject 1</label>
 <input type="number" id="m1" min="0" max="100">
@@ -166,13 +173,25 @@ color:white;
 <input type="number" id="m5" min="0" max="100">
 
 <div class="buttons">
-<button onclick="runProgram()">Calculate</button>
-<button onclick="resetForm()">Reset</button>
-<button onclick="printResult()">Print Result</button>
-<button onclick="toggleDarkMode()">🌙 Dark Mode</button>
-</div>
+
+<button onclick="runProgram()">
+Calculate
+</button>
+
+<button onclick="resetForm()">
+Reset
+</button>
+
+<button onclick="printResult()">
+Print Result
+</button>
+
+<button onclick="toggleDarkMode()">
+🌙 Dark Mode
+</button>
 
 </div>
+
 <div id="studentDetails"></div>
 
 <div id="output"></div>
