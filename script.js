@@ -1,12 +1,24 @@
-// Load saved data when page opens
+// =============================
+// Load Saved Result
+// =============================
 window.onload = function () {
-    if (localStorage.getItem("studentResult")) {
-        document.getElementById("output").innerHTML =
-            localStorage.getItem("studentResult");
+
+    const details = localStorage.getItem("studentDetails");
+    const result = localStorage.getItem("studentResult");
+
+    if (details) {
+        document.getElementById("studentDetails").innerHTML = details;
     }
+
+    if (result) {
+        document.getElementById("output").innerHTML = result;
+    }
+
 };
 
+// =============================
 // Calculate Result
+// =============================
 function runProgram() {
 
     let name = document.getElementById("name").value.trim();
@@ -31,17 +43,23 @@ function runProgram() {
         isNaN(m4) ||
         isNaN(m5)
     ) {
+
         alert("Please fill all fields.");
         return;
+
     }
 
     let marks = [m1, m2, m3, m4, m5];
 
     for (let mark of marks) {
+
         if (mark < 0 || mark > 100) {
-            alert("Marks should be between 0 and 100.");
+
+            alert("Marks must be between 0 and 100.");
             return;
+
         }
+
     }
 
     let total = m1 + m2 + m3 + m4 + m5;
@@ -50,69 +68,82 @@ function runProgram() {
 
     let grade = "";
     let remarks = "";
+    // =============================
+// Grade & Remarks
+// =============================
 
-    if (percentage >= 90) {
-        grade = "A+";
-        remarks = "Outstanding";
-    } else if (percentage >= 80) {
-        grade = "A";
-        remarks = "Excellent";
-    } else if (percentage >= 70) {
-        grade = "B";
-        remarks = "Very Good";
-    } else if (percentage >= 60) {
-        grade = "C";
-        remarks = "Good";
-    } else if (percentage >= 50) {
-        grade = "D";
-        remarks = "Pass";
-    } else {
-        grade = "F";
-        remarks = "Fail";
-    }
-
-    let status = percentage >= 50 ? "PASS" : "FAIL";
-
-    let scholarship =
-        percentage >= 85 ? "Eligible" : "Not Eligible";
-    let resultOnly = `
-    <h2>Result</h2>
-
-    <p><b>Total:</b> ${total}</p>
-    <p><b>Average:</b> ${average.toFixed(2)}</p>
-    <p><b>Percentage:</b> ${percentage.toFixed(2)}%</p>
-    <p><b>Grade:</b> ${grade}</p>
-    <p><b>Remarks:</b> ${remarks}</p>
-    <p><b>Status:</b> ${status}</p>
-    <p><b>Scholarship:</b> ${scholarship}</p>
-    `;
-
-    let output = `
-    <h2>Student Details</h2>
-
-    <p><b>Name:</b> ${name}</p>
-    <p><b>Roll Number:</b> ${roll}</p>
-    <p><b>Course:</b> ${course}</p>
-    <p><b>Age:</b> ${age}</p>
-
-    <h2>Result</h2>
-
-    <p><b>Total:</b> ${total}</p>
-    <p><b>Average:</b> ${average.toFixed(2)}</p>
-    <p><b>Percentage:</b> ${percentage.toFixed(2)}%</p>
-    <p><b>Grade:</b> ${grade}</p>
-    <p><b>Remarks:</b> ${remarks}</p>
-    <p><b>Status:</b> ${status}</p>
-    <p><b>Scholarship:</b> ${scholarship}</p>
-    `;
-
-    document.getElementById("output").innerHTML = output;
-
-    localStorage.setItem("studentResult", output);
-    localStorage.setItem("printResult", resultOnly);
+if (percentage >= 90) {
+    grade = "A+";
+    remarks = "Outstanding";
+}
+else if (percentage >= 80) {
+    grade = "A";
+    remarks = "Excellent";
+}
+else if (percentage >= 70) {
+    grade = "B";
+    remarks = "Very Good";
+}
+else if (percentage >= 60) {
+    grade = "C";
+    remarks = "Good";
+}
+else if (percentage >= 50) {
+    grade = "D";
+    remarks = "Pass";
+}
+else {
+    grade = "F";
+    remarks = "Fail";
 }
 
+let status = percentage >= 50 ? "PASS ✅" : "FAIL ❌";
+
+let scholarship = percentage >= 85
+    ? "Eligible"
+    : "Not Eligible";
+
+// =============================
+// Student Details
+// =============================
+
+let details = `
+<h2>Student Details</h2>
+
+<p><b>Name:</b> ${name}</p>
+<p><b>Roll Number:</b> ${roll}</p>
+<p><b>Course:</b> ${course}</p>
+<p><b>Age:</b> ${age}</p>
+`;
+
+// =============================
+// Result
+// =============================
+
+let result = `
+<h2>Result</h2>
+
+<p><b>Total Marks:</b> ${total}</p>
+<p><b>Average:</b> ${average.toFixed(2)}</p>
+<p><b>Percentage:</b> ${percentage.toFixed(2)}%</p>
+<p><b>Grade:</b> ${grade}</p>
+<p><b>Remarks:</b> ${remarks}</p>
+<p><b>Status:</b> ${status}</p>
+<p><b>Scholarship:</b> ${scholarship}</p>
+`;
+
+// Display on screen
+document.getElementById("studentDetails").innerHTML = details;
+document.getElementById("output").innerHTML = result;
+
+// Save in Local Storage
+localStorage.setItem("studentDetails", details);
+localStorage.setItem("studentResult", result);
+
+}
+// =============================
 // Reset Form
+// =============================
 function resetForm() {
 
     document.getElementById("name").value = "";
@@ -126,54 +157,31 @@ function resetForm() {
     document.getElementById("m4").value = "";
     document.getElementById("m5").value = "";
 
+    document.getElementById("studentDetails").innerHTML = "";
     document.getElementById("output").innerHTML = "";
 
+    localStorage.removeItem("studentDetails");
     localStorage.removeItem("studentResult");
+
 }
 
+// =============================
 // Dark Mode
+// =============================
 function toggleDarkMode() {
     document.body.classList.toggle("dark");
 }
+
+// =============================
+// Print Result Only
+// =============================
 function printResult() {
 
-    const result = localStorage.getItem("printResult");
+    if (document.getElementById("output").innerHTML.trim() === "") {
+        alert("Please calculate the result first.");
+        return;
+    }
 
-    const printWindow = window.open("", "", "width=800,height=600");
+    window.print();
 
-    printWindow.document.write(`
-        <html>
-        <head>
-            <title>Student Grade Report</title>
-            <style>
-                body{
-                    font-family: Arial, sans-serif;
-                    padding:30px;
-                    line-height:1.8;
-                    color:#000;
-                }
-
-                h2{
-                    color:#0d6efd;
-                    border-bottom:2px solid #0d6efd;
-                    padding-bottom:5px;
-                }
-
-                p{
-                    font-size:18px;
-                }
-            </style>
-        </head>
-
-        <body>
-            <h1 style="text-align:center;">Student Grade Report</h1>
-            ${result}
-        </body>
-        </html>
-    `);
-
-    printWindow.document.close();
-    printWindow.focus();
-    printWindow.print();
-    printWindow.close();
-                }
+}
