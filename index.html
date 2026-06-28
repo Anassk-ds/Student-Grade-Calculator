@@ -122,38 +122,55 @@ button:hover{
         visibility: hidden;
     }
 
+    #studentDetails,
+    #studentDetails *,
     #output,
     #output * {
         visibility: visible;
     }
 
-    #output {
+    #studentDetails {
         position: absolute;
         top: 20px;
         left: 20px;
         width: calc(100% - 40px);
-        padding: 30px;
+        padding: 25px;
         border: 2px solid #0d6efd;
         border-radius: 10px;
         background: white !important;
         color: black !important;
         font-family: Arial, sans-serif;
-        box-shadow: none;
     }
 
+    #output {
+        position: absolute;
+        top: 300px; /* Increase if student details become longer */
+        left: 20px;
+        width: calc(100% - 40px);
+        padding: 25px;
+        border: 2px solid #0d6efd;
+        border-radius: 10px;
+        background: white !important;
+        color: black !important;
+        font-family: Arial, sans-serif;
+    }
+
+    #studentDetails h2,
     #output h2 {
         text-align: center;
         color: #0d6efd;
-        margin-bottom: 20px;
         border-bottom: 2px solid #0d6efd;
         padding-bottom: 10px;
+        margin-bottom: 20px;
     }
 
+    #studentDetails p,
     #output p {
         font-size: 18px;
-        margin: 12px 0;
+        margin: 10px 0;
     }
 
+    #studentDetails b,
     #output b {
         color: #0d6efd;
     }
