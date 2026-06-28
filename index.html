@@ -114,6 +114,10 @@ button:hover{
 }
 @media print {
 
+    body {
+        background: white !important;
+    }
+
     body * {
         visibility: hidden;
     }
@@ -121,19 +125,39 @@ button:hover{
     #output,
     #output * {
         visibility: visible;
- }
+    }
 
     #output {
         position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        padding: 20px;
-        background: white;
-        color: black;
- }
+        top: 20px;
+        left: 20px;
+        width: calc(100% - 40px);
+        padding: 30px;
+        border: 2px solid #0d6efd;
+        border-radius: 10px;
+        background: white !important;
+        color: black !important;
+        font-family: Arial, sans-serif;
+        box-shadow: none;
+    }
 
- }
+    #output h2 {
+        text-align: center;
+        color: #0d6efd;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #0d6efd;
+        padding-bottom: 10px;
+    }
+
+    #output p {
+        font-size: 18px;
+        margin: 12px 0;
+    }
+
+    #output b {
+        color: #0d6efd;
+    }
+}
 </style>
 </head>
 
