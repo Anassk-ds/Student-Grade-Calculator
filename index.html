@@ -33,16 +33,14 @@ h1{
     color:#0d6efd;
     margin-bottom:20px;
 }
-
 h2{
-    color:#ffffff;
+    color:#333;
     margin-top:20px;
     margin-bottom:15px;
     font-size:28px;
     border-bottom:2px solid #0d6efd;
     padding-bottom:5px;
 }
-
 label{
     display:block;
     margin-top:12px;
@@ -87,7 +85,6 @@ button:hover{
     border-radius:8px;
     background:#f8f9fa;
 }
-
 .dark{
     background:#222;
     color:#fff;
@@ -95,17 +92,45 @@ button:hover{
 
 .dark .container{
     background:#333;
+    color:#fff;
+}
+
+.dark h1{
+    color:#4da3ff;
+}
+
+.dark h2{
+    color:#fff;
+    border-bottom:2px solid #4da3ff;
+}
+
+.dark label{
+    color:#fff;
 }
 
 .dark input{
-    background:#FFFFFF;
-    color:white;
+    background:#fff;
+    color:#000;
     border:1px solid #777;
+}
+
+.dark input::placeholder{
+    color:#666;
+}
+
+.dark button{
+    background:#0d6efd;
+    color:#fff;
+}
+
+.dark button:hover{
+    background:#084298;
 }
 
 .dark #studentDetails,
 .dark #output{
     background:#444;
+    color:#fff;
 }
 
 @media(max-width:600px){
