@@ -5,7 +5,6 @@ Student Grade Calculator
 The Student Grade Calculator is a responsive web application developed using HTML, CSS, and JavaScript. It allows users to enter student information and subject marks, then automatically calculates the total, average, percentage, grade, remarks, pass/fail status, and scholarship eligibility.
 
 This project was created to strengthen my front-end web development and JavaScript skills.
-
 ---
 
 🚀 Features
@@ -23,15 +22,12 @@ This project was created to strengthen my front-end web development and JavaScri
 - Print Result
 - Local Storage Support
 - Responsive Design
-
 ---
-
 🛠️ Technologies Used
 
 - HTML5
 - CSS3
 - JavaScript (ES6)
-
 ---
 
 📂 Project Structure
@@ -40,7 +36,6 @@ Student-Grade-Calculator/
 │── index.html
 │── script.js
 │── README.md
-
 ---
 
 ▶️ How to Run
@@ -52,7 +47,6 @@ Student-Grade-Calculator/
 5. Click Calculate to view the result.
 6. Use Print Result to print the generated result.
 7. Use Dark Mode to switch the theme.
-
 ---
 
 📊 Grade Criteria
@@ -64,7 +58,6 @@ Percentage| Grade| Remarks
 60–69| C| Good
 50–59| D| Pass
 Below 50| F| Fail
-
 ---
 
 🎯 Future Improvements
@@ -75,7 +68,6 @@ Below 50| F| Fail
 - Subject-wise Grade Analysis
 - Charts and Graphs
 - CGPA Calculator
-
 ---
 
 👨‍💻 Developer
@@ -85,7 +77,6 @@ SHAIK ANAS
 B.Tech – Computer Science and Engineering (Data Science)
 
 Chalapathi Institute of Technology
-
 ---
 
 📧 Contact
@@ -93,7 +84,6 @@ Chalapathi Institute of Technology
 Email: anasshaik382@gmail.com
 
 Phone: +91 7842386284
-
 ---
 
 🔗 Links
