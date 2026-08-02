@@ -1,11 +1,10 @@
 Student Grade Calculator
-
 📖 About
 
 The Student Grade Calculator is a responsive web application developed using HTML, CSS, and JavaScript. It allows users to enter student information and subject marks, then automatically calculates the total, average, percentage, grade, remarks, pass/fail status, and scholarship eligibility.
 
 This project was created to strengthen my front-end web development and JavaScript skills.
----
+--
 
 🚀 Features
 
