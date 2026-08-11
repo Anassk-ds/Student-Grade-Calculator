@@ -4,15 +4,22 @@
 
 window.onload = function () {
 
-    const details = localStorage.getItem("studentDetails");
-    const result = localStorage.getItem("studentResult");
+    const details =
+        localStorage.getItem("studentDetails");
+
+    const result =
+        localStorage.getItem("studentResult");
 
     if (details) {
-        document.getElementById("studentDetails").innerHTML = details;
+        document.getElementById(
+            "studentDetails"
+        ).innerHTML = details;
     }
 
     if (result) {
-        document.getElementById("output").innerHTML = result;
+        document.getElementById(
+            "output"
+        ).innerHTML = result;
     }
 
     displayHistory();
@@ -20,24 +27,32 @@ window.onload = function () {
 
 
 // =============================
-// Get Grade
+// Get Subject Grade
 // =============================
 
 function getSubjectGrade(mark) {
 
     if (mark >= 90) {
         return "A+";
-    } else if (mark >= 80) {
-        return "A";
-    } else if (mark >= 70) {
-        return "B";
-    } else if (mark >= 60) {
-        return "C";
-    } else if (mark >= 50) {
-        return "D";
-    } else {
-        return "F";
     }
+
+    if (mark >= 80) {
+        return "A";
+    }
+
+    if (mark >= 70) {
+        return "B";
+    }
+
+    if (mark >= 60) {
+        return "C";
+    }
+
+    if (mark >= 50) {
+        return "D";
+    }
+
+    return "F";
 }
 
 
@@ -49,19 +64,29 @@ function getGradePoint(mark) {
 
     if (mark >= 90) {
         return 10;
-    } else if (mark >= 80) {
-        return 9;
-    } else if (mark >= 70) {
-        return 8;
-    } else if (mark >= 60) {
-        return 7;
-    } else if (mark >= 50) {
-        return 6;
-    } else if (mark >= 40) {
-        return 5;
-    } else {
-        return 0;
     }
+
+    if (mark >= 80) {
+        return 9;
+    }
+
+    if (mark >= 70) {
+        return 8;
+    }
+
+    if (mark >= 60) {
+        return 7;
+    }
+
+    if (mark >= 50) {
+        return 6;
+    }
+
+    if (mark >= 40) {
+        return 5;
+    }
+
+    return 0;
 }
 
 
@@ -73,17 +98,25 @@ function getPerformance(mark) {
 
     if (mark >= 90) {
         return "Outstanding";
-    } else if (mark >= 80) {
-        return "Excellent";
-    } else if (mark >= 70) {
-        return "Very Good";
-    } else if (mark >= 60) {
-        return "Good";
-    } else if (mark >= 50) {
-        return "Average";
-    } else {
-        return "Needs Improvement";
     }
+
+    if (mark >= 80) {
+        return "Excellent";
+    }
+
+    if (mark >= 70) {
+        return "Very Good";
+    }
+
+    if (mark >= 60) {
+        return "Good";
+    }
+
+    if (mark >= 50) {
+        return "Average";
+    }
+
+    return "Needs Improvement";
 }
 
 
@@ -95,22 +128,30 @@ function getOverallPerformance(percentage) {
 
     if (percentage >= 90) {
         return "Outstanding Performance";
-    } else if (percentage >= 80) {
-        return "Excellent Performance";
-    } else if (percentage >= 70) {
-        return "Very Good Performance";
-    } else if (percentage >= 60) {
-        return "Good Performance";
-    } else if (percentage >= 50) {
-        return "Average Performance";
-    } else {
-        return "Needs Significant Improvement";
     }
+
+    if (percentage >= 80) {
+        return "Excellent Performance";
+    }
+
+    if (percentage >= 70) {
+        return "Very Good Performance";
+    }
+
+    if (percentage >= 60) {
+        return "Good Performance";
+    }
+
+    if (percentage >= 50) {
+        return "Average Performance";
+    }
+
+    return "Needs Significant Improvement";
 }
 
 
 // =============================
-// Get Result History
+// Get History
 // =============================
 
 function getHistory() {
@@ -118,19 +159,32 @@ function getHistory() {
     const history =
         localStorage.getItem("resultHistory");
 
-    return history
-        ? JSON.parse(history)
-        : [];
+    if (!history) {
+        return [];
+    }
+
+    try {
+        return JSON.parse(history);
+    } catch (error) {
+
+        console.error(
+            "Unable to load result history:",
+            error
+        );
+
+        return [];
+    }
 }
 
 
 // =============================
-// Save Result History
+// Save Result To History
 // =============================
 
 function saveToHistory(data) {
 
-    const history = getHistory();
+    const history =
+        getHistory();
 
     history.push(data);
 
@@ -154,16 +208,26 @@ function displayHistory() {
         return;
     }
 
-    const history = getHistory();
+    const history =
+        getHistory();
+
 
     if (history.length === 0) {
 
         historyContainer.innerHTML = `
-            <h2>Result History</h2>
+
+            <h2>
+                Result History
+            </h2>
 
             <div class="empty-history">
-                <p>No previous results found.</p>
+
+                <p>
+                    No previous results found.
+                </p>
+
             </div>
+
         `;
 
         return;
@@ -172,49 +236,81 @@ function displayHistory() {
 
     let historyRows = "";
 
-    history.forEach((item, index) => {
 
-        historyRows += `
-            <tr>
+    history.forEach(
+        (item, index) => {
 
-                <td>${index + 1}</td>
+            historyRows += `
 
-                <td>${item.name}</td>
+                <tr>
 
-                <td>${item.roll}</td>
+                    <td>
+                        ${index + 1}
+                    </td>
 
-                <td>${item.percentage}%</td>
+                    <td>
+                        ${item.name}
+                    </td>
 
-                <td>${item.grade}</td>
+                    <td>
+                        ${item.roll}
+                    </td>
 
-                <td>${item.cgpa}</td>
+                    <td>
+                        ${item.percentage}%
+                    </td>
 
-                <td>${item.status}</td>
+                    <td>
+                        ${item.grade}
+                    </td>
 
-                <td>${item.date}</td>
+                    <td>
+                        ${item.cgpa}
+                    </td>
 
-            </tr>
-        `;
-    });
+                    <td>
+                        ${item.status}
+                    </td>
+
+                    <td>
+                        ${item.date}
+                    </td>
+
+                </tr>
+
+            `;
+        }
+    );
 
 
     historyContainer.innerHTML = `
 
-        <h2>Result History</h2>
+        <h2>
+            Result History
+        </h2>
 
         <table class="history-table">
 
             <thead>
 
                 <tr>
+
                     <th>#</th>
+
                     <th>Name</th>
+
                     <th>Roll Number</th>
+
                     <th>Percentage</th>
+
                     <th>Grade</th>
+
                     <th>CGPA</th>
+
                     <th>Status</th>
+
                     <th>Date</th>
+
                 </tr>
 
             </thead>
@@ -235,6 +331,7 @@ function displayHistory() {
         >
             Clear History
         </button>
+
     `;
 }
 
@@ -245,19 +342,24 @@ function displayHistory() {
 
 function clearHistory() {
 
-    const history = getHistory();
+    const history =
+        getHistory();
+
 
     if (history.length === 0) {
 
-        alert("There is no history to clear.");
+        alert(
+            "There is no history to clear."
+        );
 
         return;
     }
 
 
-    const confirmation = confirm(
-        "Are you sure you want to clear all result history?"
-    );
+    const confirmation =
+        confirm(
+            "Are you sure you want to clear all result history?"
+        );
 
 
     if (!confirmation) {
@@ -265,11 +367,17 @@ function clearHistory() {
     }
 
 
-    localStorage.removeItem("resultHistory");
+    localStorage.removeItem(
+        "resultHistory"
+    );
+
 
     displayHistory();
 
-    alert("Result history cleared successfully.");
+
+    alert(
+        "Result history cleared successfully."
+    );
 }
 
 
@@ -280,16 +388,27 @@ function clearHistory() {
 function runProgram() {
 
     const name =
-        document.getElementById("name").value.trim();
+        document.getElementById(
+            "name"
+        ).value.trim();
+
 
     const roll =
-        document.getElementById("roll").value.trim();
+        document.getElementById(
+            "roll"
+        ).value.trim();
+
 
     const course =
-        document.getElementById("course").value.trim();
+        document.getElementById(
+            "course"
+        ).value.trim();
+
 
     const age =
-        document.getElementById("age").value;
+        document.getElementById(
+            "age"
+        ).value;
 
 
     // =============================
@@ -297,19 +416,43 @@ function runProgram() {
     // =============================
 
     const m1 =
-        Number(document.getElementById("m1").value);
+        Number(
+            document.getElementById(
+                "m1"
+            ).value
+        );
+
 
     const m2 =
-        Number(document.getElementById("m2").value);
+        Number(
+            document.getElementById(
+                "m2"
+            ).value
+        );
+
 
     const m3 =
-        Number(document.getElementById("m3").value);
+        Number(
+            document.getElementById(
+                "m3"
+            ).value
+        );
+
 
     const m4 =
-        Number(document.getElementById("m4").value);
+        Number(
+            document.getElementById(
+                "m4"
+            ).value
+        );
+
 
     const m5 =
-        Number(document.getElementById("m5").value);
+        Number(
+            document.getElementById(
+                "m5"
+            ).value
+        );
 
 
     // =============================
@@ -335,7 +478,9 @@ function runProgram() {
     // Age Validation
     // =============================
 
-    const ageNumber = Number(age);
+    const ageNumber =
+        Number(age);
+
 
     if (
         !Number.isInteger(ageNumber) ||
@@ -418,13 +563,17 @@ function runProgram() {
         i++
     ) {
 
-        const mark = marks[i];
+        const mark =
+            marks[i];
 
-        const grade =
+
+        const subjectGrade =
             getSubjectGrade(mark);
+
 
         const gradePoint =
             getGradePoint(mark);
+
 
         const performance =
             getPerformance(mark);
@@ -443,7 +592,7 @@ function runProgram() {
                 </td>
 
                 <td>
-                    ${grade}
+                    ${subjectGrade}
                 </td>
 
                 <td>
@@ -455,6 +604,7 @@ function runProgram() {
                 </td>
 
             </tr>
+
         `;
     }
 
@@ -465,7 +615,8 @@ function runProgram() {
 
     const total =
         marks.reduce(
-            (sum, mark) => sum + mark,
+            (sum, mark) =>
+                sum + mark,
             0
         );
 
@@ -483,22 +634,27 @@ function runProgram() {
 
 
     // =============================
-    // Calculate CGPA
+    // CGPA
     // =============================
 
     const gradePoints =
-        marks.map(mark => getGradePoint(mark));
+        marks.map(
+            mark =>
+                getGradePoint(mark)
+        );
 
 
     const totalGradePoints =
         gradePoints.reduce(
-            (sum, point) => sum + point,
+            (sum, point) =>
+                sum + point,
             0
         );
 
 
     const cgpa =
-        totalGradePoints / gradePoints.length;
+        totalGradePoints /
+        gradePoints.length;
 
 
     const formattedCGPA =
@@ -582,8 +738,12 @@ function runProgram() {
     const highestMark =
         Math.max(...marks);
 
+
     const highestIndex =
-        marks.indexOf(highestMark);
+        marks.indexOf(
+            highestMark
+        );
+
 
     const bestSubject =
         subjects[highestIndex];
@@ -596,8 +756,12 @@ function runProgram() {
     const lowestMark =
         Math.min(...marks);
 
+
     const lowestIndex =
-        marks.indexOf(lowestMark);
+        marks.indexOf(
+            lowestMark
+        );
+
 
     const weakestSubject =
         subjects[lowestIndex];
@@ -609,7 +773,9 @@ function runProgram() {
 
     const details = `
 
-        <h2>Student Details</h2>
+        <h2>
+            Student Details
+        </h2>
 
         <p>
             <b>Name:</b>
@@ -792,7 +958,10 @@ function runProgram() {
         <div class="analysis-box">
 
             <p>
-                <b>Best Subject:</b>
+                <b>
+                    Best Subject:
+                </b>
+
                 ${bestSubject}
                 (${highestMark} marks)
             </p>
@@ -860,7 +1029,7 @@ function runProgram() {
 
 
     // =============================
-    // Save History
+    // Save To History
     // =============================
 
     const historyData = {
@@ -889,7 +1058,9 @@ function runProgram() {
     };
 
 
-    saveToHistory(historyData);
+    saveToHistory(
+        historyData
+    );
 
 
     // =============================
@@ -906,31 +1077,81 @@ function runProgram() {
 
 function resetForm() {
 
-    document.getElementById("name").value = "";
+    document.getElementById(
+        "name"
+    ).value = "";
 
-    document.getElementById("roll").value = "";
 
-    document.getElementById("course").value = "";
+    document.getElementById(
+        "roll"
+    ).value = "";
 
-    document.getElementById("age").value = "";
 
-    document.getElementById("m1").value = "";
+    document.getElementById(
+        "course"
+    ).value = "";
 
-    document.getElementById("m2").value = "";
 
-    document.getElementById("m3").value = "";
+    document.getElementById(
+        "age"
+    ).value = "";
 
-    document.getElementById("m4").value = "";
 
-    document.getElementById("m5").value = "";
+    document.getElementById(
+        "m1"
+    ).value = "";
+
+
+    document.getElementById(
+        "m2"
+    ).value = "";
+
+
+    document.getElementById(
+        "m3"
+    ).value = "";
+
+
+    document.getElementById(
+        "m4"
+    ).value = "";
+
+
+    document.getElementById(
+        "m5"
+    ).value = "";
+
 
     document.getElementById(
         "studentDetails"
-    ).innerHTML = "";
+    ).innerHTML = `
+
+        <h2>
+            Student Details
+        </h2>
+
+        <p>
+            Enter student information and
+            calculate the result.
+        </p>
+
+    `;
+
 
     document.getElementById(
         "output"
-    ).innerHTML = "";
+    ).innerHTML = `
+
+        <h2>
+            Student Grade Report
+        </h2>
+
+        <p>
+            Your calculated result will
+            appear here.
+        </p>
+
+    `;
 }
 
 
@@ -940,7 +1161,9 @@ function resetForm() {
 
 function toggleDarkMode() {
 
-    document.body.classList.toggle("dark");
+    document.body.classList.toggle(
+        "dark"
+    );
 }
 
 
@@ -951,7 +1174,9 @@ function toggleDarkMode() {
 function printResult() {
 
     const output =
-        document.getElementById("output");
+        document.getElementById(
+            "output"
+        );
 
 
     if (
@@ -967,4 +1192,96 @@ function printResult() {
 
 
     window.print();
+}
+
+
+// =============================
+// Download Result
+// =============================
+
+function downloadResult() {
+
+    const output =
+        document.getElementById(
+            "output"
+        );
+
+
+    if (
+        output.innerText.trim() === ""
+    ) {
+
+        alert(
+            "Please calculate the result first."
+        );
+
+        return;
+    }
+
+
+    const studentDetails =
+        document.getElementById(
+            "studentDetails"
+        ).innerText;
+
+
+    const result =
+        output.innerText;
+
+
+    const content = `
+
+STUDENT GRADE REPORT
+====================
+
+${studentDetails}
+
+${result}
+
+====================
+Generated by Student Grade Calculator
+
+`;
+
+
+    const blob =
+        new Blob(
+            [content],
+            {
+                type: "text/plain"
+            }
+        );
+
+
+    const url =
+        URL.createObjectURL(blob);
+
+
+    const link =
+        document.createElement("a");
+
+
+    link.href = url;
+
+
+    link.download =
+        "student-grade-report.txt";
+
+
+    document.body.appendChild(
+        link
+    );
+
+
+    link.click();
+
+
+    document.body.removeChild(
+        link
+    );
+
+
+    URL.revokeObjectURL(
+        url
+    );
 }
