@@ -62,6 +62,28 @@ function getPerformance(mark) {
 
 
 // =============================
+// Get Overall Performance
+// =============================
+
+function getOverallPerformance(percentage) {
+
+    if (percentage >= 90) {
+        return "Outstanding Performance";
+    } else if (percentage >= 80) {
+        return "Excellent Performance";
+    } else if (percentage >= 70) {
+        return "Very Good Performance";
+    } else if (percentage >= 60) {
+        return "Good Performance";
+    } else if (percentage >= 50) {
+        return "Average Performance";
+    } else {
+        return "Needs Significant Improvement";
+    }
+}
+
+
+// =============================
 // Calculate Result
 // =============================
 
@@ -145,7 +167,9 @@ function runProgram() {
         marks.some(mark => !Number.isFinite(mark))
     ) {
 
-        alert("Please enter valid numeric marks for all subjects.");
+        alert(
+            "Please enter valid numeric marks for all subjects."
+        );
 
         return;
     }
@@ -155,7 +179,9 @@ function runProgram() {
         marks.some(mark => mark < 0 || mark > 100)
     ) {
 
-        alert("Marks must be between 0 and 100.");
+        alert(
+            "Marks must be between 0 and 100."
+        );
 
         return;
     }
@@ -184,7 +210,7 @@ function runProgram() {
 
         const mark = marks[i];
 
-        const grade =
+        const subjectGrade =
             getSubjectGrade(mark);
 
         const performance =
@@ -194,7 +220,7 @@ function runProgram() {
             <tr>
                 <td>${subjects[i]}</td>
                 <td>${mark}</td>
-                <td>${grade}</td>
+                <td>${subjectGrade}</td>
                 <td>${performance}</td>
             </tr>
         `;
@@ -263,8 +289,8 @@ function runProgram() {
 
     const status =
         percentage >= 50
-            ? "PASS ✅"
-            : "FAIL ❌";
+            ? "PASS"
+            : "FAIL";
 
 
     // =============================
@@ -278,7 +304,15 @@ function runProgram() {
 
 
     // =============================
-    // Find Best Subject
+    // Performance
+    // =============================
+
+    const overallPerformance =
+        getOverallPerformance(percentage);
+
+
+    // =============================
+    // Best Subject
     // =============================
 
     const highestMark =
@@ -292,7 +326,7 @@ function runProgram() {
 
 
     // =============================
-    // Find Weakest Subject
+    // Weakest Subject
     // =============================
 
     const lowestMark =
@@ -331,6 +365,36 @@ function runProgram() {
 
 
     // =============================
+    // Performance Bar
+    // =============================
+
+    const performanceBar = `
+        <div style="
+            width:100%;
+            background:#e5e7eb;
+            border-radius:10px;
+            overflow:hidden;
+            margin:15px 0;
+        ">
+
+            <div style="
+                width:${percentage}%;
+                height:25px;
+                background:#333;
+                border-radius:10px;
+                text-align:center;
+                color:white;
+                line-height:25px;
+                font-weight:bold;
+            ">
+                ${percentage.toFixed(1)}%
+            </div>
+
+        </div>
+    `;
+
+
+    // =============================
     // Result
     // =============================
 
@@ -339,38 +403,60 @@ function runProgram() {
         <h2>Student Grade Report</h2>
 
         <p>
-            <b>Total Marks:</b> ${total} / 500
+            <b>Total Marks:</b>
+            ${total} / 500
         </p>
 
         <p>
-            <b>Average:</b> ${average.toFixed(2)}
+            <b>Average:</b>
+            ${average.toFixed(2)}
         </p>
 
         <p>
-            <b>Percentage:</b> ${percentage.toFixed(2)}%
+            <b>Percentage:</b>
+            ${percentage.toFixed(2)}%
         </p>
 
         <p>
-            <b>Overall Grade:</b> ${grade}
+            <b>Overall Grade:</b>
+            ${grade}
         </p>
 
         <p>
-            <b>Remarks:</b> ${remarks}
+            <b>Remarks:</b>
+            ${remarks}
         </p>
 
         <p>
-            <b>Status:</b> ${status}
+            <b>Status:</b>
+            ${status}
         </p>
 
         <p>
-            <b>Scholarship:</b> ${scholarship}
+            <b>Scholarship:</b>
+            ${scholarship}
         </p>
+
+        <hr>
+
+        <h3>Overall Performance</h3>
+
+        <p>
+            <b>${overallPerformance}</b>
+        </p>
+
+        ${performanceBar}
 
         <hr>
 
         <h3>Subject-wise Performance</h3>
 
-        <table border="1" cellpadding="8" cellspacing="0">
+        <table
+            border="1"
+            cellpadding="8"
+            cellspacing="0"
+            width="100%"
+        >
 
             <thead>
 
@@ -416,7 +502,7 @@ function runProgram() {
 
 
     // =============================
-    // Display
+    // Display Result
     // =============================
 
     document.getElementById(
@@ -429,7 +515,7 @@ function runProgram() {
 
 
     // =============================
-    // Save
+    // Save Result
     // =============================
 
     localStorage.setItem(
