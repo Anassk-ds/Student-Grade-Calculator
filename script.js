@@ -20,7 +20,7 @@ window.onload = function () {
 
 
 // =============================
-// Get Subject Grade
+// Get Grade
 // =============================
 
 function getSubjectGrade(mark) {
@@ -37,6 +37,30 @@ function getSubjectGrade(mark) {
         return "D";
     } else {
         return "F";
+    }
+}
+
+
+// =============================
+// Get Grade Point
+// =============================
+
+function getGradePoint(mark) {
+
+    if (mark >= 90) {
+        return 10;
+    } else if (mark >= 80) {
+        return 9;
+    } else if (mark >= 70) {
+        return 8;
+    } else if (mark >= 60) {
+        return 7;
+    } else if (mark >= 50) {
+        return 6;
+    } else if (mark >= 40) {
+        return 5;
+    } else {
+        return 0;
     }
 }
 
@@ -101,7 +125,7 @@ function getHistory() {
 
 
 // =============================
-// Save Result to History
+// Save Result History
 // =============================
 
 function saveToHistory(data) {
@@ -135,7 +159,11 @@ function displayHistory() {
     if (history.length === 0) {
 
         historyContainer.innerHTML = `
-            <p>No previous results found.</p>
+            <h2>Result History</h2>
+
+            <div class="empty-history">
+                <p>No previous results found.</p>
+            </div>
         `;
 
         return;
@@ -149,33 +177,21 @@ function displayHistory() {
         historyRows += `
             <tr>
 
-                <td>
-                    ${index + 1}
-                </td>
+                <td>${index + 1}</td>
 
-                <td>
-                    ${item.name}
-                </td>
+                <td>${item.name}</td>
 
-                <td>
-                    ${item.roll}
-                </td>
+                <td>${item.roll}</td>
 
-                <td>
-                    ${item.percentage}%
-                </td>
+                <td>${item.percentage}%</td>
 
-                <td>
-                    ${item.grade}
-                </td>
+                <td>${item.grade}</td>
 
-                <td>
-                    ${item.status}
-                </td>
+                <td>${item.cgpa}</td>
 
-                <td>
-                    ${item.date}
-                </td>
+                <td>${item.status}</td>
+
+                <td>${item.date}</td>
 
             </tr>
         `;
@@ -186,31 +202,19 @@ function displayHistory() {
 
         <h2>Result History</h2>
 
-        <table
-            border="1"
-            cellpadding="8"
-            cellspacing="0"
-            width="100%"
-        >
+        <table class="history-table">
 
             <thead>
 
                 <tr>
-
                     <th>#</th>
-
                     <th>Name</th>
-
                     <th>Roll Number</th>
-
                     <th>Percentage</th>
-
                     <th>Grade</th>
-
+                    <th>CGPA</th>
                     <th>Status</th>
-
                     <th>Date</th>
-
                 </tr>
 
             </thead>
@@ -225,7 +229,10 @@ function displayHistory() {
 
         <br>
 
-        <button onclick="clearHistory()">
+        <button
+            class="danger-button"
+            onclick="clearHistory()"
+        >
             Clear History
         </button>
     `;
@@ -238,8 +245,7 @@ function displayHistory() {
 
 function clearHistory() {
 
-    const history =
-        getHistory();
+    const history = getHistory();
 
     if (history.length === 0) {
 
@@ -249,10 +255,9 @@ function clearHistory() {
     }
 
 
-    const confirmation =
-        confirm(
-            "Are you sure you want to clear all result history?"
-        );
+    const confirmation = confirm(
+        "Are you sure you want to clear all result history?"
+    );
 
 
     if (!confirmation) {
@@ -260,9 +265,7 @@ function clearHistory() {
     }
 
 
-    localStorage.removeItem(
-        "resultHistory"
-    );
+    localStorage.removeItem("resultHistory");
 
     displayHistory();
 
@@ -332,8 +335,7 @@ function runProgram() {
     // Age Validation
     // =============================
 
-    const ageNumber =
-        Number(age);
+    const ageNumber = Number(age);
 
     if (
         !Number.isInteger(ageNumber) ||
@@ -391,7 +393,7 @@ function runProgram() {
 
 
     // =============================
-    // Subjects
+    // Subject Names
     // =============================
 
     const subjects = [
@@ -404,7 +406,7 @@ function runProgram() {
 
 
     // =============================
-    // Subject Rows
+    // Subject Analysis
     // =============================
 
     let subjectRows = "";
@@ -416,11 +418,13 @@ function runProgram() {
         i++
     ) {
 
-        const mark =
-            marks[i];
+        const mark = marks[i];
 
-        const subjectGrade =
+        const grade =
             getSubjectGrade(mark);
+
+        const gradePoint =
+            getGradePoint(mark);
 
         const performance =
             getPerformance(mark);
@@ -439,7 +443,11 @@ function runProgram() {
                 </td>
 
                 <td>
-                    ${subjectGrade}
+                    ${grade}
+                </td>
+
+                <td>
+                    ${gradePoint}
                 </td>
 
                 <td>
@@ -457,11 +465,14 @@ function runProgram() {
 
     const total =
         marks.reduce(
-            (sum, mark) =>
-                sum + mark,
+            (sum, mark) => sum + mark,
             0
         );
 
+
+    // =============================
+    // Average
+    // =============================
 
     const average =
         total / marks.length;
@@ -469,6 +480,29 @@ function runProgram() {
 
     const percentage =
         average;
+
+
+    // =============================
+    // Calculate CGPA
+    // =============================
+
+    const gradePoints =
+        marks.map(mark => getGradePoint(mark));
+
+
+    const totalGradePoints =
+        gradePoints.reduce(
+            (sum, point) => sum + point,
+            0
+        );
+
+
+    const cgpa =
+        totalGradePoints / gradePoints.length;
+
+
+    const formattedCGPA =
+        cgpa.toFixed(2);
 
 
     // =============================
@@ -575,9 +609,7 @@ function runProgram() {
 
     const details = `
 
-        <h2>
-            Student Details
-        </h2>
+        <h2>Student Details</h2>
 
         <p>
             <b>Name:</b>
@@ -598,6 +630,7 @@ function runProgram() {
             <b>Age:</b>
             ${ageNumber}
         </p>
+
     `;
 
 
@@ -607,30 +640,19 @@ function runProgram() {
 
     const performanceBar = `
 
-        <div style="
-            width:100%;
-            background:#e5e7eb;
-            border-radius:10px;
-            overflow:hidden;
-            margin:15px 0;
-        ">
+        <div class="performance-container">
 
-            <div style="
-                width:${percentage}%;
-                height:25px;
-                background:#333;
-                border-radius:10px;
-                text-align:center;
-                color:white;
-                line-height:25px;
-                font-weight:bold;
-            ">
+            <div
+                class="performance-bar"
+                style="width:${percentage}%"
+            >
 
                 ${percentage.toFixed(1)}%
 
             </div>
 
         </div>
+
     `;
 
 
@@ -644,46 +666,62 @@ function runProgram() {
             Student Grade Report
         </h2>
 
+
         <p>
             <b>Total Marks:</b>
             ${total} / 500
         </p>
+
 
         <p>
             <b>Average:</b>
             ${average.toFixed(2)}
         </p>
 
+
         <p>
             <b>Percentage:</b>
             ${percentage.toFixed(2)}%
         </p>
+
 
         <p>
             <b>Overall Grade:</b>
             ${grade}
         </p>
 
+
+        <p>
+            <b>CGPA:</b>
+            ${formattedCGPA} / 10
+        </p>
+
+
         <p>
             <b>Remarks:</b>
             ${remarks}
         </p>
+
 
         <p>
             <b>Status:</b>
             ${status}
         </p>
 
+
         <p>
             <b>Scholarship:</b>
             ${scholarship}
         </p>
 
+
         <hr>
+
 
         <h3>
             Overall Performance
         </h3>
+
 
         <p>
             <b>
@@ -691,20 +729,19 @@ function runProgram() {
             </b>
         </p>
 
+
         ${performanceBar}
 
+
         <hr>
+
 
         <h3>
             Subject-wise Performance
         </h3>
 
-        <table
-            border="1"
-            cellpadding="8"
-            cellspacing="0"
-            width="100%"
-        >
+
+        <table class="result-table">
 
             <thead>
 
@@ -723,12 +760,17 @@ function runProgram() {
                     </th>
 
                     <th>
+                        Grade Point
+                    </th>
+
+                    <th>
                         Performance
                     </th>
 
                 </tr>
 
             </thead>
+
 
             <tbody>
 
@@ -738,35 +780,52 @@ function runProgram() {
 
         </table>
 
+
         <hr>
+
 
         <h3>
             Performance Analysis
         </h3>
 
-        <p>
-            <b>
-                Best Subject:
-            </b>
 
-            ${bestSubject}
-            (${highestMark} marks)
-        </p>
+        <div class="analysis-box">
 
-        <p>
-            <b>
-                Subject Needing Most Improvement:
-            </b>
+            <p>
+                <b>Best Subject:</b>
+                ${bestSubject}
+                (${highestMark} marks)
+            </p>
 
-            ${weakestSubject}
-            (${lowestMark} marks)
-        </p>
+
+            <p>
+                <b>
+                    Subject Needing Most Improvement:
+                </b>
+
+                ${weakestSubject}
+                (${lowestMark} marks)
+            </p>
+
+
+            <p>
+                <b>
+                    CGPA:
+                </b>
+
+                ${formattedCGPA} / 10
+            </p>
+
+        </div>
+
 
         <hr>
+
 
         <p style="text-align:center;">
             Generated by Student Grade Calculator
         </p>
+
     `;
 
 
@@ -801,7 +860,7 @@ function runProgram() {
 
 
     // =============================
-    // Save to History
+    // Save History
     // =============================
 
     const historyData = {
@@ -821,6 +880,8 @@ function runProgram() {
 
         grade: grade,
 
+        cgpa: formattedCGPA,
+
         status: status,
 
         date:
@@ -828,9 +889,7 @@ function runProgram() {
     };
 
 
-    saveToHistory(
-        historyData
-    );
+    saveToHistory(historyData);
 
 
     // =============================
@@ -847,47 +906,27 @@ function runProgram() {
 
 function resetForm() {
 
-    document.getElementById(
-        "name"
-    ).value = "";
+    document.getElementById("name").value = "";
 
-    document.getElementById(
-        "roll"
-    ).value = "";
+    document.getElementById("roll").value = "";
 
-    document.getElementById(
-        "course"
-    ).value = "";
+    document.getElementById("course").value = "";
 
-    document.getElementById(
-        "age"
-    ).value = "";
+    document.getElementById("age").value = "";
 
-    document.getElementById(
-        "m1"
-    ).value = "";
+    document.getElementById("m1").value = "";
 
-    document.getElementById(
-        "m2"
-    ).value = "";
+    document.getElementById("m2").value = "";
 
-    document.getElementById(
-        "m3"
-    ).value = "";
+    document.getElementById("m3").value = "";
 
-    document.getElementById(
-        "m4"
-    ).value = "";
+    document.getElementById("m4").value = "";
 
-    document.getElementById(
-        "m5"
-    ).value = "";
-
+    document.getElementById("m5").value = "";
 
     document.getElementById(
         "studentDetails"
     ).innerHTML = "";
-
 
     document.getElementById(
         "output"
@@ -901,9 +940,7 @@ function resetForm() {
 
 function toggleDarkMode() {
 
-    document.body.classList.toggle(
-        "dark"
-    );
+    document.body.classList.toggle("dark");
 }
 
 
@@ -914,9 +951,7 @@ function toggleDarkMode() {
 function printResult() {
 
     const output =
-        document.getElementById(
-            "output"
-        );
+        document.getElementById("output");
 
 
     if (
