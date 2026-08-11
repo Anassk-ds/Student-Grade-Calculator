@@ -1,5 +1,5 @@
 // =============================
-// Load Saved Result
+// Load Saved Data
 // =============================
 
 window.onload = function () {
@@ -14,6 +14,8 @@ window.onload = function () {
     if (result) {
         document.getElementById("output").innerHTML = result;
     }
+
+    displayHistory();
 };
 
 
@@ -62,7 +64,7 @@ function getPerformance(mark) {
 
 
 // =============================
-// Get Overall Performance
+// Overall Performance
 // =============================
 
 function getOverallPerformance(percentage) {
@@ -80,6 +82,191 @@ function getOverallPerformance(percentage) {
     } else {
         return "Needs Significant Improvement";
     }
+}
+
+
+// =============================
+// Get Result History
+// =============================
+
+function getHistory() {
+
+    const history =
+        localStorage.getItem("resultHistory");
+
+    return history
+        ? JSON.parse(history)
+        : [];
+}
+
+
+// =============================
+// Save Result to History
+// =============================
+
+function saveToHistory(data) {
+
+    const history = getHistory();
+
+    history.push(data);
+
+    localStorage.setItem(
+        "resultHistory",
+        JSON.stringify(history)
+    );
+}
+
+
+// =============================
+// Display History
+// =============================
+
+function displayHistory() {
+
+    const historyContainer =
+        document.getElementById("history");
+
+    if (!historyContainer) {
+        return;
+    }
+
+    const history = getHistory();
+
+    if (history.length === 0) {
+
+        historyContainer.innerHTML = `
+            <p>No previous results found.</p>
+        `;
+
+        return;
+    }
+
+
+    let historyRows = "";
+
+    history.forEach((item, index) => {
+
+        historyRows += `
+            <tr>
+
+                <td>
+                    ${index + 1}
+                </td>
+
+                <td>
+                    ${item.name}
+                </td>
+
+                <td>
+                    ${item.roll}
+                </td>
+
+                <td>
+                    ${item.percentage}%
+                </td>
+
+                <td>
+                    ${item.grade}
+                </td>
+
+                <td>
+                    ${item.status}
+                </td>
+
+                <td>
+                    ${item.date}
+                </td>
+
+            </tr>
+        `;
+    });
+
+
+    historyContainer.innerHTML = `
+
+        <h2>Result History</h2>
+
+        <table
+            border="1"
+            cellpadding="8"
+            cellspacing="0"
+            width="100%"
+        >
+
+            <thead>
+
+                <tr>
+
+                    <th>#</th>
+
+                    <th>Name</th>
+
+                    <th>Roll Number</th>
+
+                    <th>Percentage</th>
+
+                    <th>Grade</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                ${historyRows}
+
+            </tbody>
+
+        </table>
+
+        <br>
+
+        <button onclick="clearHistory()">
+            Clear History
+        </button>
+    `;
+}
+
+
+// =============================
+// Clear History
+// =============================
+
+function clearHistory() {
+
+    const history =
+        getHistory();
+
+    if (history.length === 0) {
+
+        alert("There is no history to clear.");
+
+        return;
+    }
+
+
+    const confirmation =
+        confirm(
+            "Are you sure you want to clear all result history?"
+        );
+
+
+    if (!confirmation) {
+        return;
+    }
+
+
+    localStorage.removeItem(
+        "resultHistory"
+    );
+
+    displayHistory();
+
+    alert("Result history cleared successfully.");
 }
 
 
@@ -133,7 +320,9 @@ function runProgram() {
         age === ""
     ) {
 
-        alert("Please fill in all student details.");
+        alert(
+            "Please fill in all student details."
+        );
 
         return;
     }
@@ -143,7 +332,8 @@ function runProgram() {
     // Age Validation
     // =============================
 
-    const ageNumber = Number(age);
+    const ageNumber =
+        Number(age);
 
     if (
         !Number.isInteger(ageNumber) ||
@@ -151,7 +341,9 @@ function runProgram() {
         ageNumber > 100
     ) {
 
-        alert("Please enter a valid age between 1 and 100.");
+        alert(
+            "Please enter a valid age between 1 and 100."
+        );
 
         return;
     }
@@ -161,10 +353,19 @@ function runProgram() {
     // Marks Validation
     // =============================
 
-    const marks = [m1, m2, m3, m4, m5];
+    const marks = [
+        m1,
+        m2,
+        m3,
+        m4,
+        m5
+    ];
+
 
     if (
-        marks.some(mark => !Number.isFinite(mark))
+        marks.some(
+            mark => !Number.isFinite(mark)
+        )
     ) {
 
         alert(
@@ -176,7 +377,9 @@ function runProgram() {
 
 
     if (
-        marks.some(mark => mark < 0 || mark > 100)
+        marks.some(
+            mark => mark < 0 || mark > 100
+        )
     ) {
 
         alert(
@@ -188,7 +391,7 @@ function runProgram() {
 
 
     // =============================
-    // Subject Names
+    // Subjects
     // =============================
 
     const subjects = [
@@ -201,14 +404,20 @@ function runProgram() {
 
 
     // =============================
-    // Subject Analysis
+    // Subject Rows
     // =============================
 
     let subjectRows = "";
 
-    for (let i = 0; i < marks.length; i++) {
 
-        const mark = marks[i];
+    for (
+        let i = 0;
+        i < marks.length;
+        i++
+    ) {
+
+        const mark =
+            marks[i];
 
         const subjectGrade =
             getSubjectGrade(mark);
@@ -216,29 +425,47 @@ function runProgram() {
         const performance =
             getPerformance(mark);
 
+
         subjectRows += `
+
             <tr>
-                <td>${subjects[i]}</td>
-                <td>${mark}</td>
-                <td>${subjectGrade}</td>
-                <td>${performance}</td>
+
+                <td>
+                    ${subjects[i]}
+                </td>
+
+                <td>
+                    ${mark}
+                </td>
+
+                <td>
+                    ${subjectGrade}
+                </td>
+
+                <td>
+                    ${performance}
+                </td>
+
             </tr>
         `;
     }
 
 
     // =============================
-    // Total & Average
+    // Total
     // =============================
 
     const total =
         marks.reduce(
-            (sum, mark) => sum + mark,
+            (sum, mark) =>
+                sum + mark,
             0
         );
 
+
     const average =
         total / marks.length;
+
 
     const percentage =
         average;
@@ -250,6 +477,7 @@ function runProgram() {
 
     let grade = "";
     let remarks = "";
+
 
     if (percentage >= 90) {
 
@@ -304,11 +532,13 @@ function runProgram() {
 
 
     // =============================
-    // Performance
+    // Overall Performance
     // =============================
 
     const overallPerformance =
-        getOverallPerformance(percentage);
+        getOverallPerformance(
+            percentage
+        );
 
 
     // =============================
@@ -344,22 +574,29 @@ function runProgram() {
     // =============================
 
     const details = `
-        <h2>Student Details</h2>
+
+        <h2>
+            Student Details
+        </h2>
 
         <p>
-            <b>Name:</b> ${name}
+            <b>Name:</b>
+            ${name}
         </p>
 
         <p>
-            <b>Roll Number:</b> ${roll}
+            <b>Roll Number:</b>
+            ${roll}
         </p>
 
         <p>
-            <b>Course:</b> ${course}
+            <b>Course:</b>
+            ${course}
         </p>
 
         <p>
-            <b>Age:</b> ${ageNumber}
+            <b>Age:</b>
+            ${ageNumber}
         </p>
     `;
 
@@ -369,6 +606,7 @@ function runProgram() {
     // =============================
 
     const performanceBar = `
+
         <div style="
             width:100%;
             background:#e5e7eb;
@@ -387,7 +625,9 @@ function runProgram() {
                 line-height:25px;
                 font-weight:bold;
             ">
+
                 ${percentage.toFixed(1)}%
+
             </div>
 
         </div>
@@ -400,7 +640,9 @@ function runProgram() {
 
     const result = `
 
-        <h2>Student Grade Report</h2>
+        <h2>
+            Student Grade Report
+        </h2>
 
         <p>
             <b>Total Marks:</b>
@@ -439,17 +681,23 @@ function runProgram() {
 
         <hr>
 
-        <h3>Overall Performance</h3>
+        <h3>
+            Overall Performance
+        </h3>
 
         <p>
-            <b>${overallPerformance}</b>
+            <b>
+                ${overallPerformance}
+            </b>
         </p>
 
         ${performanceBar}
 
         <hr>
 
-        <h3>Subject-wise Performance</h3>
+        <h3>
+            Subject-wise Performance
+        </h3>
 
         <table
             border="1"
@@ -461,10 +709,23 @@ function runProgram() {
             <thead>
 
                 <tr>
-                    <th>Subject</th>
-                    <th>Marks</th>
-                    <th>Grade</th>
-                    <th>Performance</th>
+
+                    <th>
+                        Subject
+                    </th>
+
+                    <th>
+                        Marks
+                    </th>
+
+                    <th>
+                        Grade
+                    </th>
+
+                    <th>
+                        Performance
+                    </th>
+
                 </tr>
 
             </thead>
@@ -479,16 +740,24 @@ function runProgram() {
 
         <hr>
 
-        <h3>Performance Analysis</h3>
+        <h3>
+            Performance Analysis
+        </h3>
 
         <p>
-            <b>Best Subject:</b>
+            <b>
+                Best Subject:
+            </b>
+
             ${bestSubject}
             (${highestMark} marks)
         </p>
 
         <p>
-            <b>Subject Needing Most Improvement:</b>
+            <b>
+                Subject Needing Most Improvement:
+            </b>
+
             ${weakestSubject}
             (${lowestMark} marks)
         </p>
@@ -509,13 +778,14 @@ function runProgram() {
         "studentDetails"
     ).innerHTML = details;
 
+
     document.getElementById(
         "output"
     ).innerHTML = result;
 
 
     // =============================
-    // Save Result
+    // Save Current Result
     // =============================
 
     localStorage.setItem(
@@ -523,10 +793,51 @@ function runProgram() {
         details
     );
 
+
     localStorage.setItem(
         "studentResult",
         result
     );
+
+
+    // =============================
+    // Save to History
+    // =============================
+
+    const historyData = {
+
+        name: name,
+
+        roll: roll,
+
+        course: course,
+
+        age: ageNumber,
+
+        total: total,
+
+        percentage:
+            percentage.toFixed(2),
+
+        grade: grade,
+
+        status: status,
+
+        date:
+            new Date().toLocaleString()
+    };
+
+
+    saveToHistory(
+        historyData
+    );
+
+
+    // =============================
+    // Update History
+    // =============================
+
+    displayHistory();
 }
 
 
@@ -536,39 +847,51 @@ function runProgram() {
 
 function resetForm() {
 
-    document.getElementById("name").value = "";
+    document.getElementById(
+        "name"
+    ).value = "";
 
-    document.getElementById("roll").value = "";
+    document.getElementById(
+        "roll"
+    ).value = "";
 
-    document.getElementById("course").value = "";
+    document.getElementById(
+        "course"
+    ).value = "";
 
-    document.getElementById("age").value = "";
+    document.getElementById(
+        "age"
+    ).value = "";
 
-    document.getElementById("m1").value = "";
+    document.getElementById(
+        "m1"
+    ).value = "";
 
-    document.getElementById("m2").value = "";
+    document.getElementById(
+        "m2"
+    ).value = "";
 
-    document.getElementById("m3").value = "";
+    document.getElementById(
+        "m3"
+    ).value = "";
 
-    document.getElementById("m4").value = "";
+    document.getElementById(
+        "m4"
+    ).value = "";
 
-    document.getElementById("m5").value = "";
+    document.getElementById(
+        "m5"
+    ).value = "";
+
 
     document.getElementById(
         "studentDetails"
     ).innerHTML = "";
+
 
     document.getElementById(
         "output"
     ).innerHTML = "";
-
-    localStorage.removeItem(
-        "studentDetails"
-    );
-
-    localStorage.removeItem(
-        "studentResult"
-    );
 }
 
 
@@ -578,8 +901,9 @@ function resetForm() {
 
 function toggleDarkMode() {
 
-    document.body.classList.toggle("dark");
-
+    document.body.classList.toggle(
+        "dark"
+    );
 }
 
 
@@ -590,7 +914,10 @@ function toggleDarkMode() {
 function printResult() {
 
     const output =
-        document.getElementById("output");
+        document.getElementById(
+            "output"
+        );
+
 
     if (
         output.innerHTML.trim() === ""
@@ -602,6 +929,7 @@ function printResult() {
 
         return;
     }
+
 
     window.print();
 }
