@@ -3,6 +3,7 @@
 // =============================
 
 window.onload = function () {
+
     const details = localStorage.getItem("studentDetails");
     const result = localStorage.getItem("studentResult");
 
@@ -17,31 +18,101 @@ window.onload = function () {
 
 
 // =============================
+// Get Subject Grade
+// =============================
+
+function getSubjectGrade(mark) {
+
+    if (mark >= 90) {
+        return "A+";
+    } else if (mark >= 80) {
+        return "A";
+    } else if (mark >= 70) {
+        return "B";
+    } else if (mark >= 60) {
+        return "C";
+    } else if (mark >= 50) {
+        return "D";
+    } else {
+        return "F";
+    }
+}
+
+
+// =============================
+// Get Performance
+// =============================
+
+function getPerformance(mark) {
+
+    if (mark >= 90) {
+        return "Outstanding";
+    } else if (mark >= 80) {
+        return "Excellent";
+    } else if (mark >= 70) {
+        return "Very Good";
+    } else if (mark >= 60) {
+        return "Good";
+    } else if (mark >= 50) {
+        return "Average";
+    } else {
+        return "Needs Improvement";
+    }
+}
+
+
+// =============================
 // Calculate Result
 // =============================
 
 function runProgram() {
 
-    // Get student details
-    const name = document.getElementById("name").value.trim();
-    const roll = document.getElementById("roll").value.trim();
-    const course = document.getElementById("course").value.trim();
-    const age = document.getElementById("age").value;
+    const name =
+        document.getElementById("name").value.trim();
 
-    // Get marks
-    const m1 = Number(document.getElementById("m1").value);
-    const m2 = Number(document.getElementById("m2").value);
-    const m3 = Number(document.getElementById("m3").value);
-    const m4 = Number(document.getElementById("m4").value);
-    const m5 = Number(document.getElementById("m5").value);
+    const roll =
+        document.getElementById("roll").value.trim();
+
+    const course =
+        document.getElementById("course").value.trim();
+
+    const age =
+        document.getElementById("age").value;
+
+
+    // =============================
+    // Get Marks
+    // =============================
+
+    const m1 =
+        Number(document.getElementById("m1").value);
+
+    const m2 =
+        Number(document.getElementById("m2").value);
+
+    const m3 =
+        Number(document.getElementById("m3").value);
+
+    const m4 =
+        Number(document.getElementById("m4").value);
+
+    const m5 =
+        Number(document.getElementById("m5").value);
 
 
     // =============================
     // Basic Validation
     // =============================
 
-    if (name === "" || roll === "" || course === "" || age === "") {
+    if (
+        name === "" ||
+        roll === "" ||
+        course === "" ||
+        age === ""
+    ) {
+
         alert("Please fill in all student details.");
+
         return;
     }
 
@@ -57,7 +128,9 @@ function runProgram() {
         ageNumber < 1 ||
         ageNumber > 100
     ) {
+
         alert("Please enter a valid age between 1 and 100.");
+
         return;
     }
 
@@ -68,30 +141,85 @@ function runProgram() {
 
     const marks = [m1, m2, m3, m4, m5];
 
-    if (marks.some(mark => !Number.isFinite(mark))) {
+    if (
+        marks.some(mark => !Number.isFinite(mark))
+    ) {
+
         alert("Please enter valid numeric marks for all subjects.");
+
         return;
     }
 
-    if (marks.some(mark => mark < 0 || mark > 100)) {
+
+    if (
+        marks.some(mark => mark < 0 || mark > 100)
+    ) {
+
         alert("Marks must be between 0 and 100.");
+
         return;
     }
 
 
     // =============================
-    // Calculate Total
+    // Subject Names
     // =============================
 
-    const total = m1 + m2 + m3 + m4 + m5;
-
-    const average = total / 5;
-
-    const percentage = average;
+    const subjects = [
+        "Subject 1",
+        "Subject 2",
+        "Subject 3",
+        "Subject 4",
+        "Subject 5"
+    ];
 
 
     // =============================
-    // Grade & Remarks
+    // Subject Analysis
+    // =============================
+
+    let subjectRows = "";
+
+    for (let i = 0; i < marks.length; i++) {
+
+        const mark = marks[i];
+
+        const grade =
+            getSubjectGrade(mark);
+
+        const performance =
+            getPerformance(mark);
+
+        subjectRows += `
+            <tr>
+                <td>${subjects[i]}</td>
+                <td>${mark}</td>
+                <td>${grade}</td>
+                <td>${performance}</td>
+            </tr>
+        `;
+    }
+
+
+    // =============================
+    // Total & Average
+    // =============================
+
+    const total =
+        marks.reduce(
+            (sum, mark) => sum + mark,
+            0
+        );
+
+    const average =
+        total / marks.length;
+
+    const percentage =
+        average;
+
+
+    // =============================
+    // Overall Grade
     // =============================
 
     let grade = "";
@@ -140,13 +268,41 @@ function runProgram() {
 
 
     // =============================
-    // Scholarship Eligibility
+    // Scholarship
     // =============================
 
     const scholarship =
         percentage >= 85
             ? "Eligible"
             : "Not Eligible";
+
+
+    // =============================
+    // Find Best Subject
+    // =============================
+
+    const highestMark =
+        Math.max(...marks);
+
+    const highestIndex =
+        marks.indexOf(highestMark);
+
+    const bestSubject =
+        subjects[highestIndex];
+
+
+    // =============================
+    // Find Weakest Subject
+    // =============================
+
+    const lowestMark =
+        Math.min(...marks);
+
+    const lowestIndex =
+        marks.indexOf(lowestMark);
+
+    const weakestSubject =
+        subjects[lowestIndex];
 
 
     // =============================
@@ -175,14 +331,15 @@ function runProgram() {
 
 
     // =============================
-    // Student Grade Report
+    // Result
     // =============================
 
     const result = `
+
         <h2>Student Grade Report</h2>
 
         <p>
-            <b>Total Marks:</b> ${total}
+            <b>Total Marks:</b> ${total} / 500
         </p>
 
         <p>
@@ -194,7 +351,7 @@ function runProgram() {
         </p>
 
         <p>
-            <b>Grade:</b> ${grade}
+            <b>Overall Grade:</b> ${grade}
         </p>
 
         <p>
@@ -211,6 +368,47 @@ function runProgram() {
 
         <hr>
 
+        <h3>Subject-wise Performance</h3>
+
+        <table border="1" cellpadding="8" cellspacing="0">
+
+            <thead>
+
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Performance</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                ${subjectRows}
+
+            </tbody>
+
+        </table>
+
+        <hr>
+
+        <h3>Performance Analysis</h3>
+
+        <p>
+            <b>Best Subject:</b>
+            ${bestSubject}
+            (${highestMark} marks)
+        </p>
+
+        <p>
+            <b>Subject Needing Most Improvement:</b>
+            ${weakestSubject}
+            (${lowestMark} marks)
+        </p>
+
+        <hr>
+
         <p style="text-align:center;">
             Generated by Student Grade Calculator
         </p>
@@ -218,16 +416,20 @@ function runProgram() {
 
 
     // =============================
-    // Display Result
+    // Display
     // =============================
 
-    document.getElementById("studentDetails").innerHTML = details;
+    document.getElementById(
+        "studentDetails"
+    ).innerHTML = details;
 
-    document.getElementById("output").innerHTML = result;
+    document.getElementById(
+        "output"
+    ).innerHTML = result;
 
 
     // =============================
-    // Save Result in Local Storage
+    // Save
     // =============================
 
     localStorage.setItem(
@@ -266,13 +468,21 @@ function resetForm() {
 
     document.getElementById("m5").value = "";
 
-    document.getElementById("studentDetails").innerHTML = "";
+    document.getElementById(
+        "studentDetails"
+    ).innerHTML = "";
 
-    document.getElementById("output").innerHTML = "";
+    document.getElementById(
+        "output"
+    ).innerHTML = "";
 
-    localStorage.removeItem("studentDetails");
+    localStorage.removeItem(
+        "studentDetails"
+    );
 
-    localStorage.removeItem("studentResult");
+    localStorage.removeItem(
+        "studentResult"
+    );
 }
 
 
@@ -296,9 +506,13 @@ function printResult() {
     const output =
         document.getElementById("output");
 
-    if (output.innerHTML.trim() === "") {
+    if (
+        output.innerHTML.trim() === ""
+    ) {
 
-        alert("Please calculate the result first.");
+        alert(
+            "Please calculate the result first."
+        );
 
         return;
     }
