@@ -1,284 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Student Grade Calculator</title>
-<style>
+    <meta charset="UTF-8">
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial,sans-serif;
-}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-body{
-    background:#f4f4f4;
-    color:#333;
-    transition:.3s;
-}
+    <meta
+        name="description"
+        content="Student Grade Calculator with performance analysis and result history"
+    >
 
-.container{
-    max-width:700px;
-    margin:30px auto;
-    background:#fff;
-    padding:25px;
-    border-radius:10px;
-    box-shadow:0 0 10px rgba(0,0,0,.2);
-}
+    <title>Student Grade Calculator</title>
 
-h1{
-    text-align:center;
-    color:#0d6efd;
-    margin-bottom:20px;
-}
-h2{
-    color:#333;
-    margin-top:20px;
-    margin-bottom:15px;
-    font-size:28px;
-    border-bottom:2px solid #0d6efd;
-    padding-bottom:5px;
-}
-label{
-    display:block;
-    margin-top:12px;
-    font-weight:bold;
-}
+    <style>
 
-input{
-    width:100%;
-    padding:10px;
-    margin-top:5px;
-    border:1px solid #ccc;
-    border-radius:5px;
-    font-size:16px;
-}
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-.buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:10px;
-    margin-top:20px;
-}
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            color: #222;
+            line-height: 1.6;
+            transition: 0.3s;
+        }
 
-button{
-    flex:1;
-    padding:12px;
-    border:none;
-    border-radius:5px;
-    background:#0d6efd;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-}
+        header {
+            background: #222;
+            color: white;
+            padding: 25px 15px;
+            text-align: center;
+        }
 
-button:hover{
-    background:#084298;
-}
+        header h1 {
+            margin-bottom: 8px;
+        }
 
-#studentDetails,
-#output{
-    margin-top:25px;
-    padding:20px;
-    border-radius:8px;
-    background:#f8f9fa;
-}
-.dark{
-    background:#222;
-    color:#fff;
-}
+        header p {
+            opacity: 0.85;
+        }
 
-.dark .container{
-    background:#333;
-    color:#fff;
-}
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 30px auto;
+        }
 
-.dark h1{
-    color:#4da3ff;
-}
+        .card {
+            background: white;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
 
-.dark h2{
-    color:#fff;
-    border-bottom:2px solid #4da3ff;
-}
+        .card h2 {
+            margin-bottom: 20px;
+        }
 
-.dark label{
-    color:#fff;
-}
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
 
-.dark input{
-    background:#fff;
-    color:#000;
-    border:1px solid #777;
-}
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
 
-.dark input::placeholder{
-    color:#666;
-}
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
 
-.dark button{
-    background:#0d6efd;
-    color:#fff;
-}
+        .form-group input {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
 
-.dark button:hover{
-    background:#084298;
-}
+        .form-group input:focus {
+            outline: none;
+            border-color: #333;
+        }
 
-.dark #studentDetails,
-.dark #output{
-    background:#444;
-    color:#fff;
-}
+        .marks-title {
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
 
-@media(max-width:600px){
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 25px;
+        }
 
-.buttons{
-    flex-direction:column;
-}
+        button {
+            border: none;
+            padding: 12px 20px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            background: #222;
+            color: white;
+            transition: 0.2s;
+        }
 
-}
-@media print {
+        button:hover {
+            opacity: 0.8;
+            transform: translateY(-1px);
+        }
 
-    body {
-        background: white !important;
-    }
+        .secondary-button {
+            background: #666;
+        }
 
-    body * {
-        visibility: hidden;
-    }
+        .danger-button {
+            background: #444;
+        }
 
-    #studentDetails,
-    #studentDetails *,
-    #output,
-    #output * {
-        visibility: visible;
-    }
+        #studentDetails,
+        #output,
+        #history {
+            margin-top: 20px;
+        }
 
-    #studentDetails {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        width: calc(100% - 40px);
-        padding: 25px;
-        border: 2px solid #0d6efd;
-        border-radius: 10px;
-        background: white !important;
-        color: black !important;
-        font-family: Arial, sans-serif;
-    }
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
 
-    #output {
-        position: absolute;
-        top: 300px; /* Increase if student details become longer */
-        left: 20px;
-        width: calc(100% - 40px);
-        padding: 25px;
-        border: 2px solid #0d6efd;
-        border-radius: 10px;
-        background: white !important;
-        color: black !important;
-        font-family: Arial, sans-serif;
-    }
+        .result-table th,
+        .result-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
 
-    #studentDetails h2,
-    #output h2 {
-        text-align: center;
-        color: #0d6efd;
-        border-bottom: 2px solid #0d6efd;
-        padding-bottom: 10px;
-        margin-bottom: 20px;
-    }
+        .result-table th {
+            background: #eee;
+        }
 
-    #studentDetails p,
-    #output p {
-        font-size: 18px;
-        margin: 10px 0;
-    }
-
-    #studentDetails b,
-    #output b {
-        color: #0d6efd;
-    }
-}
-/* Force heading colors */
-
-h2{
-    color:#333 !important;
-}
-
-.dark h2{
-    color:#ffffff !important;
-    border-bottom:2px solid #4da3ff;
-}
-</style>
-</head>
-
-<body>
-
-<div class="container">
-
-<h1>Student Grade Calculator</h1>
-
-<h2>Student Details</h2>
-
-<label>Name</label>
-<input type="text" id="name">
-
-<label>Roll Number</label>
-<input type="text" id="roll">
-
-<label>Course</label>
-<input type="text" id="course">
-
-<label>Age</label>
-<input type="number" id="age">
-<h2>Subject Marks</h2>
-
-<label>Subject 1</label>
-<input type="number" id="m1" min="0" max="100">
-
-<label>Subject 2</label>
-<input type="number" id="m2" min="0" max="100">
-
-<label>Subject 3</label>
-<input type="number" id="m3" min="0" max="100">
-
-<label>Subject 4</label>
-<input type="number" id="m4" min="0" max="100">
-
-<label>Subject 5</label>
-<input type="number" id="m5" min="0" max="100">
-
-<div class="buttons">
-
-<button onclick="runProgram()">
-Calculate
-</button>
-
-<button onclick="resetForm()">
-Reset
-</button>
-
-<button onclick="printResult()">
-Print Result
-</button>
-
-<button onclick="toggleDarkMode()">
-🌙 Dark Mode
-</button>
-
-</div>
-
-<div id="studentDetails"></div>
-
-<div id="output"></div>
-
-</div>
-
-<script src="script.js"></script>
-
-</body>
-</html>
+        .performance-container {
+            width: 100%;
+            background: #
