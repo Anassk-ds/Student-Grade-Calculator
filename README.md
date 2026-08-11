@@ -1,92 +1,263 @@
 Student Grade Calculator
-📖 About
 
-The Student Grade Calculator is a responsive web application developed using HTML, CSS, and JavaScript. It allows users to enter student information and subject marks, then automatically calculates the total, average, percentage, grade, remarks, pass/fail status, and scholarship eligibility.
+A simple and interactive Student Grade Calculator built using HTML, CSS, and JavaScript.
 
-This project was created to strengthen my front-end web development and JavaScript skills.
---
+The application allows students to enter their academic details and marks, calculate their results, analyze subject-wise performance, calculate CGPA, save result history, and download their result report.
 
-🚀 Features
-
-- Student Details Form
-- Marks Entry for 5 Subjects
-- Automatic Total Marks Calculation
-- Average & Percentage Calculation
-- Grade Generation (A+, A, B, C, D, F)
-- Remarks Based on Performance
-- Pass/Fail Status
-- Scholarship Eligibility Check
-- Input Validation (Marks between 0–100)
-- Dark Mode Toggle
-- Print Result
-- Local Storage Support
-- Responsive Design
 ---
-🛠️ Technologies Used
+
+Features
+
+- Student information input
+- Subject-wise marks entry
+- Input validation
+- Automatic total marks calculation
+- Percentage calculation
+- Overall grade calculation
+- Subject-wise grade calculation
+- Grade point calculation
+- CGPA calculation
+- Subject performance analysis
+- Best subject identification
+- Weakest subject identification
+- Overall performance indicator
+- Result history using Local Storage
+- Clear result history
+- Dark mode
+- Print result
+- Download result report
+- Responsive design for mobile devices
+
+---
+
+Technologies Used
 
 - HTML5
 - CSS3
-- JavaScript (ES6)
+- JavaScript
+- Browser Local Storage
+
 ---
 
-📂 Project Structure
+How It Works
+
+1. Enter Student Details
+
+The user enters:
+
+- Student Name
+- Roll Number
+- Course
+- Age
+
+2. Enter Subject Marks
+
+The application accepts marks for five subjects.
+
+Each subject accepts marks between 0 and 100.
+
+3. Calculate Result
+
+After clicking Calculate Result, the application calculates:
+
+- Total Marks
+- Average
+- Percentage
+- Overall Grade
+- CGPA
+- Result Status
+- Scholarship Eligibility
+
+4. Subject Analysis
+
+The application displays each subject's:
+
+- Marks
+- Grade
+- Grade Point
+- Performance
+
+It also identifies the student's:
+
+- Best Subject
+- Subject Needing Most Improvement
+
+5. Result History
+
+Previous results are stored in the browser using Local Storage.
+
+The history contains:
+
+- Student Name
+- Roll Number
+- Percentage
+- Grade
+- CGPA
+- Status
+- Date
+
+6. Download Result
+
+The generated result can be downloaded as a text file.
+
+7. Print Result
+
+Students can print their generated result directly from the browser.
+
+---
+
+Grade System
+
+Marks| Grade| Grade Point
+90 - 100| A+| 10
+80 - 89| A| 9
+70 - 79| B| 8
+60 - 69| C| 7
+50 - 59| D| 6
+40 - 49| Pass| 5
+Below 40| F| 0
+
+---
+
+CGPA Calculation
+
+The application calculates CGPA using the average of the grade points obtained in the five subjects.
+
+CGPA = Total Grade Points / Number of Subjects
+
+For example:
+
+Subject 1 = 10
+Subject 2 = 9
+Subject 3 = 8
+Subject 4 = 7
+Subject 5 = 9
+
+CGPA = (10 + 9 + 8 + 7 + 9) / 5
+
+CGPA = 8.60
+
+«Note: This is a simplified CGPA calculation based on the grade-point mapping used by this application. Official university CGPA calculations may use credit-weighted grade points.»
+
+---
+
+Project Structure
 
 Student-Grade-Calculator/
-│── index.html
-│── script.js
-│── README.md
+│
+├── index.html
+├── script.js
+└── README.md
+
 ---
 
-▶️ How to Run
+Getting Started
 
-1. Download or clone the repository.
-2. Open the project folder.
-3. Open index.html in any modern web browser.
-4. Enter student details and marks.
-5. Click Calculate to view the result.
-6. Use Print Result to print the generated result.
-7. Use Dark Mode to switch the theme.
+Clone the Repository
+
+git clone https://github.com/Anassk-ds/Student-Grade-Calculator.git
+
+Open the Project
+
+Navigate to the project folder:
+
+cd Student-Grade-Calculator
+
+Open:
+
+index.html
+
+in any modern web browser.
+
+No backend or database setup is required.
+
 ---
 
-📊 Grade Criteria
+Local Storage
 
-Percentage| Grade| Remarks
-90–100| A+| Outstanding
-80–89| A| Excellent
-70–79| B| Very Good
-60–69| C| Good
-50–59| D| Pass
-Below 50| F| Fail
+The application uses the browser's Local Storage to maintain:
+
+- Current student details
+- Current result
+- Previous result history
+
+This allows the result history to remain available even after refreshing the page.
+
 ---
 
-🎯 Future Improvements
+Validation
 
-- Export Result as PDF
-- Multiple Student Records
-- Result History
-- Subject-wise Grade Analysis
-- Charts and Graphs
-- CGPA Calculator
+The application validates:
+
+- Empty student information
+- Invalid age
+- Missing marks
+- Marks below 0
+- Marks above 100
+- Invalid numeric input
+
+Invalid information is rejected before the result is calculated.
+
 ---
 
-👨‍💻 Developer
+Responsive Design
 
-SHAIK ANAS
+The application is designed to work on:
 
-B.Tech – Computer Science and Engineering (Data Science)
+- Desktop
+- Laptop
+- Tablet
+- Mobile devices
+
+The layout automatically adjusts according to the screen size.
+
+---
+
+Future Improvements
+
+Possible future improvements include:
+
+- Login and authentication
+- Multiple student profiles
+- PDF result generation
+- Excel export
+- Subject name customization
+- Credit-based CGPA calculation
+- Student dashboard
+- Graphical performance charts
+- Backend database integration
+- Cloud data storage
+- Admin dashboard
+
+---
+
+Project Goal
+
+The main goal of this project is to create a simple web-based academic result management tool while practicing:
+
+- HTML structure
+- CSS styling
+- JavaScript programming
+- DOM manipulation
+- Form validation
+- Local Storage
+- Array methods
+- Conditional logic
+- Dynamic HTML generation
+- Responsive web design
+
+---
+
+Author
+
+Shaik Anas
+
+B.Tech - Data Science
 
 Chalapathi Institute of Technology
+
 ---
 
-📧 Contact
+License
 
-Email: anasshaik382@gmail.com
-
-Phone: +91 7842386284
----
-
-🔗 Links
-
-GitHub: https://github.com/Anassk-ds
-
-Live Demo: https://anassk-ds.github.io/Student-Grade-Calculator/
+This project is created for educational and learning purposes.
