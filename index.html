@@ -11,7 +11,7 @@
 
     <meta
         name="description"
-        content="Student Grade Calculator with performance analysis and result history"
+        content="Student Grade Calculator with CGPA, performance analysis, result history and downloadable reports"
     >
 
     <title>Student Grade Calculator</title>
@@ -136,23 +136,449 @@
             margin-top: 20px;
         }
 
-        .result-table {
+        .result-table,
+        .history-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
         }
 
         .result-table th,
-        .result-table td {
+        .result-table td,
+        .history-table th,
+        .history-table td {
             border: 1px solid #ccc;
             padding: 10px;
             text-align: center;
         }
 
-        .result-table th {
+        .result-table th,
+        .history-table th {
             background: #eee;
         }
 
         .performance-container {
             width: 100%;
-            background: #
+            background: #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .performance-bar {
+            height: 28px;
+            background: #333;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+
+        .analysis-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        .empty-history {
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px;
+            background: #222;
+            color: white;
+            margin-top: 40px;
+        }
+
+        body.dark {
+            background: #121212;
+            color: #eee;
+        }
+
+        body.dark .card {
+            background: #1e1e1e;
+            color: #eee;
+        }
+
+        body.dark .form-group input {
+            background: #2a2a2a;
+            color: white;
+            border-color: #555;
+        }
+
+        body.dark .analysis-box,
+        body.dark .empty-history {
+            background: #2a2a2a;
+        }
+
+        body.dark .result-table th,
+        body.dark .history-table th {
+            background: #333;
+        }
+
+        body.dark .result-table th,
+        body.dark .result-table td,
+        body.dark .history-table th,
+        body.dark .history-table td {
+            border-color: #555;
+        }
+
+        body.dark .performance-container {
+            background: #444;
+        }
+
+        @media (max-width: 700px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .card {
+                padding: 18px;
+            }
+
+            .result-table,
+            .history-table {
+                font-size: 13px;
+            }
+
+            .result-table th,
+            .result-table td,
+            .history-table th,
+            .history-table td {
+                padding: 7px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+    <header>
+
+        <h1>
+            Student Grade Calculator
+        </h1>
+
+        <p>
+            Calculate grades, analyze performance,
+            calculate CGPA and manage result history
+        </p>
+
+    </header>
+
+
+    <main class="container">
+
+
+        <!-- Student Information -->
+
+        <section class="card">
+
+            <h2>
+                Student Information
+            </h2>
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Student Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter student name"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="roll">
+                        Roll Number
+                    </label>
+
+                    <input
+                        type="text"
+                        id="roll"
+                        placeholder="Enter roll number"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="course">
+                        Course
+                    </label>
+
+                    <input
+                        type="text"
+                        id="course"
+                        placeholder="Enter course"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="age">
+                        Age
+                    </label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        placeholder="Enter age"
+                        min="1"
+                        max="100"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <h3 class="marks-title">
+                Subject Marks
+            </h3>
+
+
+            <div class="form-grid">
+
+                <div class="form-group">
+
+                    <label for="m1">
+                        Subject 1
+                    </label>
+
+                    <input
+                        type="number"
+                        id="m1"
+                        placeholder="0 - 100"
+                        min="0"
+                        max="100"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="m2">
+                        Subject 2
+                    </label>
+
+                    <input
+                        type="number"
+                        id="m2"
+                        placeholder="0 - 100"
+                        min="0"
+                        max="100"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="m3">
+                        Subject 3
+                    </label>
+
+                    <input
+                        type="number"
+                        id="m3"
+                        placeholder="0 - 100"
+                        min="0"
+                        max="100"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="m4">
+                        Subject 4
+                    </label>
+
+                    <input
+                        type="number"
+                        id="m4"
+                        placeholder="0 - 100"
+                        min="0"
+                        max="100"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="m5">
+                        Subject 5
+                    </label>
+
+                    <input
+                        type="number"
+                        id="m5"
+                        placeholder="0 - 100"
+                        min="0"
+                        max="100"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div class="button-container">
+
+                <button onclick="runProgram()">
+                    Calculate Result
+                </button>
+
+                <button
+                    class="secondary-button"
+                    onclick="resetForm()"
+                >
+                    Reset
+                </button>
+
+                <button
+                    class="secondary-button"
+                    onclick="toggleDarkMode()"
+                >
+                    Toggle Dark Mode
+                </button>
+
+                <button
+                    class="secondary-button"
+                    onclick="printResult()"
+                >
+                    Print Result
+                </button>
+
+                <button
+                    class="secondary-button"
+                    onclick="downloadResult()"
+                >
+                    Download Result
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Student Details -->
+
+        <section class="card">
+
+            <div id="studentDetails">
+
+                <h2>
+                    Student Details
+                </h2>
+
+                <p>
+                    Enter student information and
+                    calculate the result.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Result -->
+
+        <section class="card">
+
+            <div id="output">
+
+                <h2>
+                    Student Grade Report
+                </h2>
+
+                <p>
+                    Your calculated result will
+                    appear here.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- Result History -->
+
+        <section class="card">
+
+            <div id="history">
+
+                <h2>
+                    Result History
+                </h2>
+
+                <div class="empty-history">
+
+                    <p>
+                        No previous results found.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+
+        <p>
+            Student Grade Calculator
+        </p>
+
+        <p>
+            Built with HTML, CSS and JavaScript
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
