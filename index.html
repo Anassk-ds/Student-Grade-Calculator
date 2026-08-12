@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta
@@ -16,13 +17,19 @@
 
     <title>Student Grade Calculator</title>
 
+
     <style>
+
+        /* =========================
+           GLOBAL STYLES
+           ========================= */
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
+
 
         body {
             font-family: Arial, sans-serif;
@@ -31,6 +38,7 @@
             line-height: 1.6;
             transition: 0.3s ease;
         }
+
 
         /* =========================
            HEADER
@@ -44,15 +52,18 @@
             box-shadow: 0 3px 10px rgba(37, 99, 235, 0.25);
         }
 
+
         header h1 {
             margin-bottom: 8px;
             font-size: 28px;
         }
 
+
         header p {
             opacity: 0.95;
             font-size: 14px;
         }
+
 
         /* =========================
            MAIN CONTAINER
@@ -63,6 +74,7 @@
             max-width: 1100px;
             margin: 30px auto;
         }
+
 
         /* =========================
            CARDS
@@ -77,14 +89,17 @@
             border: 1px solid #e2e8f0;
         }
 
+
         .card h2 {
             color: #1e40af;
             margin-bottom: 20px;
         }
 
+
         .card h3 {
             color: #334155;
         }
+
 
         /* =========================
            FORM
@@ -96,16 +111,19 @@
             gap: 18px;
         }
 
+
         .form-group {
             display: flex;
             flex-direction: column;
         }
+
 
         .form-group label {
             font-weight: bold;
             margin-bottom: 7px;
             color: #334155;
         }
+
 
         .form-group input {
             padding: 12px;
@@ -117,17 +135,22 @@
             transition: 0.2s ease;
         }
 
+
         .form-group input:focus {
             outline: none;
             border-color: #2563eb;
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+            box-shadow:
+                0 0 0 3px
+                rgba(37, 99, 235, 0.12);
         }
+
 
         .marks-title {
             margin-top: 25px;
             margin-bottom: 15px;
             color: #1e40af;
         }
+
 
         /* =========================
            BUTTONS
@@ -139,6 +162,7 @@
             gap: 12px;
             margin-top: 25px;
         }
+
 
         button {
             border: none;
@@ -152,27 +176,35 @@
             transition: all 0.2s ease;
         }
 
+
         button:hover {
             background: #1d4ed8;
             transform: translateY(-2px);
-            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+            box-shadow:
+                0 4px 10px
+                rgba(37, 99, 235, 0.25);
         }
+
 
         .secondary-button {
             background: #64748b;
         }
 
+
         .secondary-button:hover {
             background: #475569;
         }
+
 
         .danger-button {
             background: #dc2626;
         }
 
+
         .danger-button:hover {
             background: #b91c1c;
         }
+
 
         /* =========================
            RESULT
@@ -184,15 +216,117 @@
             margin-top: 20px;
         }
 
+
         #output h2 {
             color: #1e40af;
             margin-bottom: 18px;
         }
 
+
         #output h3 {
             color: #2563eb;
             margin: 12px 0;
         }
+
+
+        /* =========================
+           RESULT SUMMARY CARDS
+           ========================= */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+
+        .summary-card {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 12px;
+            padding: 18px;
+            text-align: center;
+            transition: 0.2s ease;
+        }
+
+
+        .summary-card:hover {
+            transform: translateY(-3px);
+            box-shadow:
+                0 5px 15px
+                rgba(37, 99, 235, 0.15);
+        }
+
+
+        .summary-card h4 {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+
+        .summary-card .summary-value {
+            color: #1d4ed8;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+
+        .summary-card.status-pass
+        .summary-value {
+            color: #16a34a;
+        }
+
+
+        .summary-card.status-fail
+        .summary-value {
+            color: #dc2626;
+        }
+
+
+        /* =========================
+           PERFORMANCE BAR
+           ========================= */
+
+        .performance-container {
+            width: 100%;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+
+        .performance-bar {
+            height: 30px;
+            background: #2563eb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: width 0.5s ease;
+        }
+
+
+        /* =========================
+           ANALYSIS
+           ========================= */
+
+        .analysis-box {
+            background: #eff6ff;
+            border-left: 4px solid #2563eb;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+
+        .analysis-box p {
+            margin-bottom: 8px;
+        }
+
 
         /* =========================
            TABLES
@@ -207,6 +341,7 @@
             border-radius: 8px;
         }
 
+
         .result-table th,
         .result-table td,
         .history-table th,
@@ -216,6 +351,7 @@
             text-align: center;
         }
 
+
         .result-table th,
         .history-table th {
             background: #dbeafe;
@@ -223,54 +359,18 @@
             font-weight: bold;
         }
 
+
         .result-table tr:nth-child(even),
         .history-table tr:nth-child(even) {
             background: #f8fafc;
         }
+
 
         .result-table tr:hover,
         .history-table tr:hover {
             background: #eff6ff;
         }
 
-        /* =========================
-           PERFORMANCE BAR
-           ========================= */
-
-        .performance-container {
-            width: 100%;
-            background: #e2e8f0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin: 15px 0;
-        }
-
-        .performance-bar {
-            height: 30px;
-            background: #2563eb;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            transition: width 0.5s ease;
-        }
-
-        /* =========================
-           ANALYSIS
-           ========================= */
-
-        .analysis-box {
-            background: #eff6ff;
-            border-left: 4px solid #2563eb;
-            padding: 16px;
-            border-radius: 8px;
-            margin-top: 15px;
-        }
-
-        .analysis-box p {
-            margin-bottom: 8px;
-        }
 
         /* =========================
            HISTORY
@@ -282,6 +382,7 @@
             border-radius: 8px;
             border: 1px solid #e2e8f0;
         }
+
 
         /* =========================
            FOOTER
@@ -295,9 +396,11 @@
             margin-top: 40px;
         }
 
+
         footer p {
             margin: 4px 0;
         }
+
 
         /* =========================
            DARK MODE
@@ -308,25 +411,30 @@
             color: #e2e8f0;
         }
 
+
         body.dark .card {
             background: #1e293b;
             color: #e2e8f0;
             border-color: #334155;
         }
 
+
         body.dark .card h2,
         body.dark #output h2 {
             color: #60a5fa;
         }
+
 
         body.dark .card h3,
         body.dark #output h3 {
             color: #93c5fd;
         }
 
+
         body.dark .form-group label {
             color: #cbd5e1;
         }
+
 
         body.dark .form-group input {
             background: #0f172a;
@@ -334,20 +442,26 @@
             border-color: #475569;
         }
 
+
         body.dark .form-group input:focus {
             border-color: #60a5fa;
-            box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
+            box-shadow:
+                0 0 0 3px
+                rgba(96, 165, 250, 0.15);
         }
+
 
         body.dark .analysis-box {
             background: #172554;
             border-left-color: #60a5fa;
         }
 
+
         body.dark .empty-history {
             background: #0f172a;
             border-color: #334155;
         }
+
 
         body.dark .result-table th,
         body.dark .history-table th {
@@ -355,24 +469,65 @@
             color: white;
         }
 
+
         body.dark .result-table td,
         body.dark .history-table td {
             border-color: #475569;
         }
+
 
         body.dark .result-table tr:nth-child(even),
         body.dark .history-table tr:nth-child(even) {
             background: #1e293b;
         }
 
+
         body.dark .result-table tr:hover,
         body.dark .history-table tr:hover {
             background: #334155;
         }
 
+
         body.dark .performance-container {
             background: #334155;
         }
+
+
+        /* =========================
+           DARK MODE SUMMARY CARDS
+           ========================= */
+
+        body.dark .summary-card {
+            background: #172554;
+            border-color: #1e40af;
+        }
+
+
+        body.dark .summary-card h4 {
+            color: #cbd5e1;
+        }
+
+
+        body.dark
+        .summary-card
+        .summary-value {
+            color: #60a5fa;
+        }
+
+
+        body.dark
+        .summary-card.status-pass
+        .summary-value {
+            color: #4ade80;
+        }
+
+
+        body.dark
+        .summary-card.status-fail
+        .summary-value {
+            color: #f87171;
+        }
+
 
         /* =========================
            MOBILE RESPONSIVE
@@ -384,21 +539,31 @@
                 font-size: 23px;
             }
 
+
             header p {
                 font-size: 12px;
             }
 
-            .form-grid {
-                grid-template-columns: 1fr;
-            }
 
             .container {
                 width: 94%;
             }
 
+
             .card {
                 padding: 18px;
             }
+
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
 
             .result-table,
             .history-table {
@@ -408,6 +573,7 @@
                 font-size: 13px;
             }
 
+
             .result-table th,
             .result-table td,
             .history-table th,
@@ -415,87 +581,35 @@
                 padding: 8px;
             }
 
+
             .button-container {
                 flex-direction: column;
             }
 
+
             button {
                 width: 100%;
             }
+
+
+            .summary-card {
+                padding: 15px 10px;
+            }
+
+
+            .summary-card .summary-value {
+                font-size: 21px;
+            }
+
         }
-        /* =========================
-   RESULT SUMMARY CARDS
-   ========================= */
-
-.summary-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.summary-card {
-    background: #eff6ff;
-    border: 1px solid #bfdbfe;
-    border-radius: 12px;
-    padding: 18px;
-    text-align: center;
-    transition: 0.2s ease;
-}
-
-.summary-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.15);
-}
-
-.summary-card h4 {
-    color: #64748b;
-    font-size: 14px;
-    margin-bottom: 8px;
-}
-
-.summary-card .summary-value {
-    color: #1d4ed8;
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.summary-card.status-pass .summary-value {
-    color: #16a34a;
-}
-
-.summary-card.status-fail .summary-value {
-    color: #dc2626;
-}
-
-/* Dark Mode */
-
-body.dark .summary-card {
-    background: #172554;
-    border-color: #1e40af;
-}
-
-body.dark .summary-card h4 {
-    color: #cbd5e1;
-}
-
-body.dark .summary-card .summary-value {
-    color: #60a5fa;
-}
-
-body.dark .summary-card.status-pass .summary-value {
-    color: #4ade80;
-}
-
-body.dark .summary-card.status-fail .summary-value {
-    color: #f87171;
-                }
 
     </style>
+
 </head>
 
 
 <body>
+
 
     <!-- =========================
          HEADER
@@ -528,7 +642,9 @@ body.dark .summary-card.status-fail .summary-value {
                 Student Information
             </h2>
 
+
             <div class="form-grid">
+
 
                 <div class="form-group">
 
@@ -788,12 +904,14 @@ body.dark .summary-card.status-fail .summary-value {
                     Calculate Result
                 </button>
 
+
                 <button
                     class="secondary-button"
                     onclick="resetForm()"
                 >
                     Reset
                 </button>
+
 
                 <button
                     class="secondary-button"
@@ -802,12 +920,14 @@ body.dark .summary-card.status-fail .summary-value {
                     Toggle Dark Mode
                 </button>
 
+
                 <button
                     class="secondary-button"
                     onclick="printResult()"
                 >
                     Print Result
                 </button>
+
 
                 <button
                     class="secondary-button"
@@ -908,6 +1028,10 @@ body.dark .summary-card.status-fail .summary-value {
 
     </footer>
 
+
+    <!-- =========================
+         JAVASCRIPT
+         ========================= -->
 
     <script src="script.js"></script>
 
