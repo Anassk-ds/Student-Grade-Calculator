@@ -423,6 +423,73 @@
                 width: 100%;
             }
         }
+        /* =========================
+   RESULT SUMMARY CARDS
+   ========================= */
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.summary-card {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    transition: 0.2s ease;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(37, 99, 235, 0.15);
+}
+
+.summary-card h4 {
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.summary-card .summary-value {
+    color: #1d4ed8;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.summary-card.status-pass .summary-value {
+    color: #16a34a;
+}
+
+.summary-card.status-fail .summary-value {
+    color: #dc2626;
+}
+
+/* Dark Mode */
+
+body.dark .summary-card {
+    background: #172554;
+    border-color: #1e40af;
+}
+
+body.dark .summary-card h4 {
+    color: #cbd5e1;
+}
+
+body.dark .summary-card .summary-value {
+    color: #60a5fa;
+}
+
+body.dark .summary-card.status-pass .summary-value {
+    color: #4ade80;
+}
+
+body.dark .summary-card.status-fail .summary-value {
+    color: #f87171;
+                }
 
     </style>
 </head>
