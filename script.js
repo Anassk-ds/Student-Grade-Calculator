@@ -27,6 +27,56 @@ window.onload = function () {
 
 
 // =============================
+// Validation Helper
+// =============================
+
+function showValidationError(
+    inputId,
+    message
+) {
+
+    const input =
+        document.getElementById(inputId);
+
+    if (input) {
+
+        input.focus();
+
+        input.style.borderColor =
+            "#dc2626";
+
+        input.style.boxShadow =
+            "0 0 0 3px rgba(220, 38, 38, 0.12)";
+    }
+
+    alert(message);
+}
+
+
+// =============================
+// Clear Validation Styles
+// =============================
+
+function clearValidationStyles() {
+
+    const inputs =
+        document.querySelectorAll(
+            "input"
+        );
+
+    inputs.forEach(
+        input => {
+
+            input.style.borderColor = "";
+
+            input.style.boxShadow = "";
+
+        }
+    );
+}
+
+
+// =============================
 // Get Subject Grade
 // =============================
 
@@ -50,6 +100,10 @@ function getSubjectGrade(mark) {
 
     if (mark >= 50) {
         return "D";
+    }
+
+    if (mark >= 40) {
+        return "Pass";
     }
 
     return "F";
@@ -124,7 +178,9 @@ function getPerformance(mark) {
 // Overall Performance
 // =============================
 
-function getOverallPerformance(percentage) {
+function getOverallPerformance(
+    percentage
+) {
 
     if (percentage >= 90) {
         return "Outstanding Performance";
@@ -157,7 +213,9 @@ function getOverallPerformance(percentage) {
 function getHistory() {
 
     const history =
-        localStorage.getItem("resultHistory");
+        localStorage.getItem(
+            "resultHistory"
+        );
 
     if (!history) {
         return [];
@@ -204,7 +262,9 @@ function saveToHistory(data) {
 function displayHistory() {
 
     const historyContainer =
-        document.getElementById("history");
+        document.getElementById(
+            "history"
+        );
 
     if (!historyContainer) {
         return;
@@ -382,6 +442,9 @@ function clearHistory() {
 
 function runProgram() {
 
+    clearValidationStyles();
+
+
     // =============================
     // Student Information
     // =============================
@@ -404,98 +467,84 @@ function runProgram() {
         ).value.trim();
 
 
-    const age =
+    const ageValue =
         document.getElementById(
             "age"
-        ).value;
+        ).value.trim();
 
 
     // =============================
-    // Subject Names
+    // Student Name Validation
     // =============================
 
-    const subjects = [
+    if (name === "") {
 
-        document.getElementById(
-            "subject1"
-        ).value.trim(),
-
-        document.getElementById(
-            "subject2"
-        ).value.trim(),
-
-        document.getElementById(
-            "subject3"
-        ).value.trim(),
-
-        document.getElementById(
-            "subject4"
-        ).value.trim(),
-
-        document.getElementById(
-            "subject5"
-        ).value.trim()
-
-    ];
-
-
-    // =============================
-    // Marks
-    // =============================
-
-    const m1 =
-        Number(
-            document.getElementById(
-                "m1"
-            ).value
+        showValidationError(
+            "name",
+            "Please enter the student's name."
         );
 
+        return;
+    }
 
-    const m2 =
-        Number(
-            document.getElementById(
-                "m2"
-            ).value
+
+    if (name.length < 2) {
+
+        showValidationError(
+            "name",
+            "Student name must contain at least 2 characters."
         );
 
-
-    const m3 =
-        Number(
-            document.getElementById(
-                "m3"
-            ).value
-        );
-
-
-    const m4 =
-        Number(
-            document.getElementById(
-                "m4"
-            ).value
-        );
-
-
-    const m5 =
-        Number(
-            document.getElementById(
-                "m5"
-            ).value
-        );
+        return;
+    }
 
 
     // =============================
-    // Student Validation
+    // Roll Number Validation
     // =============================
 
-    if (
-        name === "" ||
-        roll === "" ||
-        course === "" ||
-        age === ""
-    ) {
+    if (roll === "") {
 
-        alert(
-            "Please fill in all student details."
+        showValidationError(
+            "roll",
+            "Please enter the roll number."
+        );
+
+        return;
+    }
+
+
+    if (roll.length < 2) {
+
+        showValidationError(
+            "roll",
+            "Please enter a valid roll number."
+        );
+
+        return;
+    }
+
+
+    // =============================
+    // Course Validation
+    // =============================
+
+    if (course === "") {
+
+        showValidationError(
+            "course",
+            "Please enter the course name."
+        );
+
+        return;
+    }
+
+
+    if (course.length < 2) {
+
+        showValidationError(
+            "course",
+            "Course name must contain at least 2 characters."
         );
 
         return;
@@ -506,18 +555,37 @@ function runProgram() {
     // Age Validation
     // =============================
 
-    const ageNumber =
-        Number(age);
+    if (ageValue === "") {
+
+        showValidationError(
+            "age",
+            "Please enter the student's age."
+        );
+
+        return;
+    }
 
 
-    if (
-        !Number.isInteger(ageNumber) ||
-        ageNumber < 1 ||
-        ageNumber > 100
-    ) {
+    const age =
+        Number(ageValue);
 
-        alert(
-            "Please enter a valid age between 1 and 100."
+
+    if (!Number.isInteger(age)) {
+
+        showValidationError(
+            "age",
+            "Age must be a whole number."
+        );
+
+        return;
+    }
+
+
+    if (age < 1 || age > 100) {
+
+        showValidationError(
+            "age",
+            "Age must be between 1 and 100."
         );
 
         return;
@@ -525,61 +593,125 @@ function runProgram() {
 
 
     // =============================
-    // Subject Name Validation
+    // Subject Names
     // =============================
 
-    if (
-        subjects.some(
-            subject => subject === ""
-        )
-    ) {
-
-        alert(
-            "Please enter names for all five subjects."
-        );
-
-        return;
-    }
-
-
-    // =============================
-    // Marks Validation
-    // =============================
-
-    const marks = [
-        m1,
-        m2,
-        m3,
-        m4,
-        m5
+    const subjectIds = [
+        "subject1",
+        "subject2",
+        "subject3",
+        "subject4",
+        "subject5"
     ];
 
 
-    if (
-        marks.some(
-            mark => !Number.isFinite(mark)
-        )
+    const subjects = [];
+
+
+    for (
+        let i = 0;
+        i < subjectIds.length;
+        i++
     ) {
 
-        alert(
-            "Please enter valid numeric marks for all subjects."
-        );
+        const subject =
+            document.getElementById(
+                subjectIds[i]
+            ).value.trim();
 
-        return;
+
+        if (subject === "") {
+
+            showValidationError(
+                subjectIds[i],
+                `Please enter the name for Subject ${i + 1}.`
+            );
+
+            return;
+        }
+
+
+        if (subject.length < 2) {
+
+            showValidationError(
+                subjectIds[i],
+                `Subject ${i + 1} name must contain at least 2 characters.`
+            );
+
+            return;
+        }
+
+
+        subjects.push(subject);
     }
 
 
-    if (
-        marks.some(
-            mark => mark < 0 || mark > 100
-        )
+    // =============================
+    // Marks
+    // =============================
+
+    const markIds = [
+        "m1",
+        "m2",
+        "m3",
+        "m4",
+        "m5"
+    ];
+
+
+    const marks = [];
+
+
+    for (
+        let i = 0;
+        i < markIds.length;
+        i++
     ) {
 
-        alert(
-            "Marks must be between 0 and 100."
-        );
+        const markValue =
+            document.getElementById(
+                markIds[i]
+            ).value.trim();
 
-        return;
+
+        if (markValue === "") {
+
+            showValidationError(
+                markIds[i],
+                `Please enter marks for ${subjects[i]}.`
+            );
+
+            return;
+        }
+
+
+        const mark =
+            Number(markValue);
+
+
+        if (!Number.isFinite(mark)) {
+
+            showValidationError(
+                markIds[i],
+                `Please enter a valid number for ${subjects[i]}.`
+            );
+
+            return;
+        }
+
+
+        if (mark < 0 || mark > 100) {
+
+            showValidationError(
+                markIds[i],
+                `Marks for ${subjects[i]} must be between 0 and 100.`
+            );
+
+            return;
+        }
+
+
+        marks.push(mark);
     }
 
 
@@ -827,7 +959,7 @@ function runProgram() {
 
         <p>
             <b>Age:</b>
-            ${ageNumber}
+            ${age}
         </p>
 
     `;
@@ -1073,7 +1205,7 @@ function runProgram() {
 
         course: course,
 
-        age: ageNumber,
+        age: age,
 
         subjects: subjects,
 
@@ -1105,6 +1237,15 @@ function runProgram() {
     // =============================
 
     displayHistory();
+
+
+    // =============================
+    // Success Message
+    // =============================
+
+    alert(
+        "Result calculated successfully!"
+    );
 }
 
 
@@ -1114,74 +1255,43 @@ function runProgram() {
 
 function resetForm() {
 
-    document.getElementById(
-        "name"
-    ).value = "";
+    clearValidationStyles();
 
 
-    document.getElementById(
-        "roll"
-    ).value = "";
+    const inputIds = [
 
+        "name",
+        "roll",
+        "course",
+        "age",
 
-    document.getElementById(
-        "course"
-    ).value = "";
+        "subject1",
+        "subject2",
+        "subject3",
+        "subject4",
+        "subject5",
 
-
-    document.getElementById(
-        "age"
-    ).value = "";
-
-
-    document.getElementById(
-        "subject1"
-    ).value = "";
-
-
-    document.getElementById(
-        "subject2"
-    ).value = "";
-
-
-    document.getElementById(
-        "subject3"
-    ).value = "";
-
-
-    document.getElementById(
-        "subject4"
-    ).value = "";
-
-
-    document.getElementById(
-        "subject5"
-    ).value = "";
-
-
-    document.getElementById(
-        "m1"
-    ).value = "";
-
-
-    document.getElementById(
-        "m2"
-    ).value = "";
-
-
-    document.getElementById(
-        "m3"
-    ).value = "";
-
-
-    document.getElementById(
-        "m4"
-    ).value = "";
-
-
-    document.getElementById(
+        "m1",
+        "m2",
+        "m3",
+        "m4",
         "m5"
-    ).value = "";
+
+    ];
+
+
+    inputIds.forEach(
+        id => {
+
+            const input =
+                document.getElementById(id);
+
+            if (input) {
+                input.value = "";
+            }
+
+        }
+    );
 
 
     document.getElementById(
