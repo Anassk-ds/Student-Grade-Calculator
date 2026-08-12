@@ -151,7 +151,7 @@ function getOverallPerformance(percentage) {
 
 
 // =============================
-// Get History
+// Get Result History
 // =============================
 
 function getHistory() {
@@ -164,7 +164,9 @@ function getHistory() {
     }
 
     try {
+
         return JSON.parse(history);
+
     } catch (error) {
 
         console.error(
@@ -296,19 +298,12 @@ function displayHistory() {
                 <tr>
 
                     <th>#</th>
-
                     <th>Name</th>
-
                     <th>Roll Number</th>
-
                     <th>Percentage</th>
-
                     <th>Grade</th>
-
                     <th>CGPA</th>
-
                     <th>Status</th>
-
                     <th>Date</th>
 
                 </tr>
@@ -387,6 +382,10 @@ function clearHistory() {
 
 function runProgram() {
 
+    // =============================
+    // Student Information
+    // =============================
+
     const name =
         document.getElementById(
             "name"
@@ -412,7 +411,36 @@ function runProgram() {
 
 
     // =============================
-    // Get Marks
+    // Subject Names
+    // =============================
+
+    const subjects = [
+
+        document.getElementById(
+            "subject1"
+        ).value.trim(),
+
+        document.getElementById(
+            "subject2"
+        ).value.trim(),
+
+        document.getElementById(
+            "subject3"
+        ).value.trim(),
+
+        document.getElementById(
+            "subject4"
+        ).value.trim(),
+
+        document.getElementById(
+            "subject5"
+        ).value.trim()
+
+    ];
+
+
+    // =============================
+    // Marks
     // =============================
 
     const m1 =
@@ -456,7 +484,7 @@ function runProgram() {
 
 
     // =============================
-    // Basic Validation
+    // Student Validation
     // =============================
 
     if (
@@ -490,6 +518,24 @@ function runProgram() {
 
         alert(
             "Please enter a valid age between 1 and 100."
+        );
+
+        return;
+    }
+
+
+    // =============================
+    // Subject Name Validation
+    // =============================
+
+    if (
+        subjects.some(
+            subject => subject === ""
+        )
+    ) {
+
+        alert(
+            "Please enter names for all five subjects."
         );
 
         return;
@@ -538,19 +584,6 @@ function runProgram() {
 
 
     // =============================
-    // Subject Names
-    // =============================
-
-    const subjects = [
-        "Subject 1",
-        "Subject 2",
-        "Subject 3",
-        "Subject 4",
-        "Subject 5"
-    ];
-
-
-    // =============================
     // Subject Analysis
     // =============================
 
@@ -567,7 +600,7 @@ function runProgram() {
             marks[i];
 
 
-        const subjectGrade =
+        const grade =
             getSubjectGrade(mark);
 
 
@@ -592,7 +625,7 @@ function runProgram() {
                 </td>
 
                 <td>
-                    ${subjectGrade}
+                    ${grade}
                 </td>
 
                 <td>
@@ -1029,7 +1062,7 @@ function runProgram() {
 
 
     // =============================
-    // Save To History
+    // Save Result History
     // =============================
 
     const historyData = {
@@ -1041,6 +1074,10 @@ function runProgram() {
         course: course,
 
         age: ageNumber,
+
+        subjects: subjects,
+
+        marks: marks,
 
         total: total,
 
@@ -1094,6 +1131,31 @@ function resetForm() {
 
     document.getElementById(
         "age"
+    ).value = "";
+
+
+    document.getElementById(
+        "subject1"
+    ).value = "";
+
+
+    document.getElementById(
+        "subject2"
+    ).value = "";
+
+
+    document.getElementById(
+        "subject3"
+    ).value = "";
+
+
+    document.getElementById(
+        "subject4"
+    ).value = "";
+
+
+    document.getElementById(
+        "subject5"
     ).value = "";
 
 
@@ -1180,7 +1242,7 @@ function printResult() {
 
 
     if (
-        output.innerHTML.trim() === ""
+        output.innerText.trim() === ""
     ) {
 
         alert(
